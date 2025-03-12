@@ -11,8 +11,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Link } from "react-router-dom";
+import { LuLogOut } from "react-icons/lu";
+import { Link, useNavigate } from "react-router-dom";
+
 function navbar() {
+  const navigate = useNavigate();
+  const handleLogOut=()=>{
+    localStorage.removeItem('access_token');
+      navigate('/login');
+  }
   return (
     <div className="flex justify-between items-center p-5 py-4 border border-b-1 border-gray-100">
       <div className="flex gap-5 items-center">
@@ -50,7 +57,7 @@ function navbar() {
             </DropdownMenuItem></Link>
             <DropdownMenuItem>Billing</DropdownMenuItem>
             <DropdownMenuItem>Team</DropdownMenuItem>
-            <DropdownMenuItem>Subscription</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogOut}><LuLogOut /><span className=" text-[14px]">Logout</span></DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

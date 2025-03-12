@@ -10,25 +10,32 @@ import Nav from "./components/navbar";
 import Detail from "./pages/Detail";
 import Post from "./pages/Post";
 import Profile from "./pages/Profile";
-
+import Prevent from "./pages/Prevent";
+import { Toaster } from "@/components/ui/sonner"
+import Username from "./pages/Username";
+ 
 function App() {
   const { count } = useStore((state) => state);
+  const isLogin = localStorage.getItem("access_token");
+
   return (
-   
-   <>
-      <Nav />
-    <Routes>
-    
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/otp-verify" element={<Otp />} />
-      <Route path="/confirm-password" element={<Password />} />
-      <Route path="/detail/:id" element={<Detail />}/>
-      <Route path="/post" element={<Post />}/>
-      <Route path="/profile/:userId" element={<Profile />}/>
-    </Routes>
-   </>
+    <>
+      {isLogin && <Nav />}
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/otp-verify" element={<Otp />} />
+        <Route path="/create-username" element={<Username />} />
+        <Route path="/confirm-password" element={<Password />} />
+        <Route element={<Prevent />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/detail/:id" element={<Detail />} />
+          <Route path="/post" element={<Post />} />
+          <Route path="/profile/:username" element={<Profile />} />
+        </Route>
+      </Routes>
+      <Toaster/>
+    </>
   );
 }
 

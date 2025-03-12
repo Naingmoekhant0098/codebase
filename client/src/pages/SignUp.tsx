@@ -1,21 +1,93 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { fetchApi } from "@/api/fetchApi";
 function SignUp() {
+  const [isLoading,setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
       email: "",
-      password: "",
+    
     },
   });
+  const navigate =useNavigate();
    
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = async(data: any) => {
+    if(!data){
+      return;
+    }
+    if(data.email.length < 10){
+      toast("Sign Up Error", {
+        description: "Please enter a valid email!",
+        position: "top-center",
+        action: {
+          label: "Close",
+          onClick: () => {
+            console.log("Closed");
+          },
+        },
+      });
+    }
+    try {
+      setIsLoading(true);
+      const responseData = await fetchApi({ endpoint: "/auth/send-otp", data : {...data,state: 'signup'} });
+      setIsLoading(false);
+      if (responseData.status !== 200) {
+        toast("Sign Up Error", {
+          description: responseData.message,
+          position: "top-center",
+          action: {
+            label: "Close",
+            onClick: () => {
+              console.log("Closed");
+            },
+          },
+        });
+      }
+    
+      if(responseData.status===200){
+        toast("Otp", {
+          description: responseData.message,
+          position: "top-center",
+          action: {
+            label: "Close",
+            onClick: () => {
+              console.log("Closed");
+            },
+          },
+        });
+       
+        // localStorage.setItem("access_token",responseData.user.token);
+        navigate('/otp-verify' ,{state : {email : data.email , state : 'signup'}});
+      }
+
+
+    } catch (error: any) {
+      console.log(error);
+      setIsLoading(false);
+      toast("Error", {
+        description: error.message,
+        position: "top-center",
+        action: {
+          label: "Close",
+          onClick: () => {
+            console.log("Closed");
+          },
+        },
+      });
+    
+    }
+    
+    
+  };
   return (
     <div className=" w-[100vw] h-[100vh] flex items-center justify-center">
       <div className=" max-w-[400px] ">
@@ -35,6 +107,7 @@ function SignUp() {
             <input
               className=" border w-full border-gray-200 p-3 rounded-md text-[14px]"
               placeholder="Email address"
+              type="email"
               {...register("email", {
                 required: {
                   value: true,
@@ -46,8 +119,10 @@ function SignUp() {
               {errors.email?.message}
             </p>
           </div>
-          <Button className="text-[14px] py-6 mt-3" type="submit">
-            <div className="">Continue</div>
+          <Button className="text-[14px] py-6 mt-3" type="submit" disabled={isLoading||!watch('email')}>
+           {
+            isLoading ?  <div className="">Loading...</div>: <div className="">Continue</div>
+           }
           </Button>
         </form>
         <div className=" mt-4 flex flex-row items-center  gap-2">
