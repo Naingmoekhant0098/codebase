@@ -38,7 +38,7 @@ import { APP_URL } from "@/Config";
 import { token_descrypt } from "@/Services/Decrypt";
 import { Skeleton } from "@/components/ui/skeleton";
 import Loading from "@/components/loading";
-import api from "@/Config/axios";
+import api from "@/api/axios";
 import CardTwo from "@/components/cartTwo";
 import { CiEdit } from "react-icons/ci";
 import { Input } from "@/components/ui/input";

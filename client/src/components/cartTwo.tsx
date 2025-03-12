@@ -18,7 +18,7 @@ import { Button } from "./ui/button";
 import { SlLike } from "react-icons/sl";
 import { AiOutlineComment } from "react-icons/ai";
 import { useQuery } from "@tanstack/react-query";
-import api from "@/Config/axios";
+import api from "@/api/axios";
 interface postProp {
   title: string;
   description: string;
