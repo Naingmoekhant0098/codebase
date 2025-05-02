@@ -1,7 +1,7 @@
 import { fetchApi } from "@/api/fetchApi";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
 
 function Username() {

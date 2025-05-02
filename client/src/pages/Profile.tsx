@@ -48,7 +48,7 @@ function Profile() {
   const [progress, setProgress] = React.useState(0);
   const [downloadImage, setDownloadImage] = useState("");
   const { username } = useParams();
-  const Fileref = useRef(null);
+  const Fileref = useRef<HTMLInputElement>(null);
   const encryptedToken = localStorage.getItem("access_token");
   const userId = (token_descrypt(encryptedToken) as { id: string })?.id;
   const [tab, setTab] = useState("posts");
@@ -445,7 +445,7 @@ function Profile() {
                         />
                         <div
                           className=" bg-white p-1 cursor-pointer absolute bottom-1 shadow right-0 rounded-full"
-                          onClick={() => Fileref?.current.click()}
+                          onClick={() => Fileref?.current?.click()}
                         >
                           <CiEdit size={20} />
                         </div>
