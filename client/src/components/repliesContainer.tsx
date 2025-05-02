@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import Reply from './reply'
 import api from '@/api/axios';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';

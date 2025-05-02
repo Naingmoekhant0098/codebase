@@ -1,24 +1,24 @@
 import { HoverCard, HoverCardTrigger } from "@radix-ui/react-hover-card";
-import React, { use, useEffect, useState } from "react";
+import  {  useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { HoverCardContent } from "./ui/hover-card";
 import { Popover, PopoverContent } from "@radix-ui/react-popover";
 import { PopoverTrigger } from "./ui/popover";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { SlLike } from "react-icons/sl";
-import { AiOutlineComment } from "react-icons/ai";
+ 
 import moment from "moment";
-import Reply from "./reply";
+ 
 import { Textarea } from "./ui/textarea";
 import api from "@/api/axios";
 import { token_descrypt } from "@/Services/Decrypt";
 import { toast } from "sonner";
-import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
+import {   useQueryClient } from "@tanstack/react-query";
 import RepliesContainer from "./repliesContainer";
 
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useNavigate } from "react-router-dom";
-import { APP_URL } from "@/Config";
+ 
 
 interface commentProp {
   _id: string;
@@ -44,7 +44,7 @@ function Comment({
   handleCommentLike
 }: commentProp) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isCommentOpen, setIsCommentOpen] = useState(false);
+ 
   const encryptedToken = localStorage.getItem("access_token");
   const [isReplyLoading, setIsReplyLoading] = useState(false);
   const userId = (token_descrypt(encryptedToken) as { id: string })?.id;

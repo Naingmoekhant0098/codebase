@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import Card from '../components/card'
 import api from '@/api/axios';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -26,7 +26,7 @@ function Home() {
     } catch (error) {}
   };
 
-  const { isLoading, error, data } = useQuery({
+  const { isLoading, data } = useQuery({
     queryKey: ["posts"],
     queryFn: () => fetchPosts(),
     // onSuccess: (data) => {
@@ -50,10 +50,11 @@ function Home() {
       return response?.data?.data;
     } catch (error) {}
   };
-  const { isLoading:userLoading, error:userError, data:userData } = useQuery({
+  const {  error:userError } = useQuery({
     queryKey: ["profileData", username],
     queryFn: () => fetchUserData(username),
   });
+  console.log(userError)
 
   const fetchMoreData = async () => {
     console.log("fetch more is working")

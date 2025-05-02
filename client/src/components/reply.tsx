@@ -1,12 +1,12 @@
 import { HoverCard, HoverCardTrigger } from '@radix-ui/react-hover-card';
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import { Button } from './ui/button';
 import { HoverCardContent } from './ui/hover-card';
 import { Popover, PopoverContent } from '@radix-ui/react-popover';
 import { PopoverTrigger } from './ui/popover';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { SlLike } from 'react-icons/sl';
-import { AiOutlineComment } from 'react-icons/ai';
+ 
 import moment from 'moment';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Textarea } from './ui/textarea';

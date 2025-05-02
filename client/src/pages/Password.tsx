@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import  { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { FaGoogle } from "react-icons/fa";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+ 
+import {useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { fetchApi } from "@/api/fetchApi";
+ 
 function Password() {
   const location = useLocation();
-  const navigage = useNavigate();
+ 
   const [isLoading, setIsLoading] = useState(false);
   const { email } = location.state || {};
   const {

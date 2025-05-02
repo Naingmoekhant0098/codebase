@@ -1,16 +1,13 @@
 import React, { useEffect } from "react";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
+  
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
+  
 } from "@/components/ui/dropdown-menu";
 import api from "@/api/axios";
 import { Button } from "./ui/button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+ 
 import { token_descrypt } from "@/Services/Decrypt";
 
 function Noti({ userId, status }: { userId: string; status: string }) {

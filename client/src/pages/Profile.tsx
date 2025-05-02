@@ -18,15 +18,15 @@ import Favourite from "@/components/favourite";
 import {
   getStorage,
   ref,
-  uploadBytes,
+  
   getDownloadURL,
   uploadBytesResumable,
 } from "firebase/storage";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
-import { useAsyncError, useLinkClickHandler, useNavigate, useParams } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { APP_URL } from "@/Config";
+ 
 import { token_descrypt } from "@/Services/Decrypt";
 import { Skeleton } from "@/components/ui/skeleton";
 import Loading from "@/components/loading";

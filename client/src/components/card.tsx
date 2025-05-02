@@ -1,4 +1,4 @@
-import React from "react";
+ 
 import { SlLike } from "react-icons/sl";
 import { AiOutlineComment } from "react-icons/ai";
 import { HiOutlineDotsCircleHorizontal } from "react-icons/hi";
@@ -15,12 +15,12 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import moment from "moment";
-import { Link, Navigate } from "react-router-dom";
+import { Link,  } from "react-router-dom";
 import api from "@/api/axios";
 import {
-  QueryClient,
+ 
   useMutation,
-  useQuery,
+  
   useQueryClient,
 } from "@tanstack/react-query";
 import { token_descrypt } from "@/Services/Decrypt";

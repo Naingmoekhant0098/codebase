@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { SiEditorconfig } from "react-icons/si";
+import  { useEffect, useState } from "react";
+
 import { CiEdit } from "react-icons/ci";
 import { GoBell } from "react-icons/go";
-import { FaUser, FaUserAstronaut } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,10 +30,10 @@ function navbar() {
       navigate('/login');
   }
 
-  const [showNav , setShowNav] = useState(false)
+ 
   const[showNavbar , setShowNavBar] = useState('topNav');
   const[scrollY , setScrollY]  = useState(0);
-  const fetchUserData = async (username: string | undefined) => {
+  const fetchUserData = async (userId: string | undefined) => {
     try {
       const response = await api.get(
         "/auth/get-user?author_id=" + userId
@@ -108,7 +108,7 @@ function navbar() {
                       {
                         data?.requestedUserList.length > 0 ?  (
                           data?.requestedUserList?.map((item:any, index:number) => (
-                               <Noti {...item}/>
+                               <Noti key={index} {...item}/>
                            
                           ))
                          

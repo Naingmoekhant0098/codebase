@@ -1,6 +1,6 @@
 import api from '@/api/axios';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import React,{useCallback, useMemo} from 'react'
+import React,{useCallback} from 'react'
 import CardTwo from './cartTwo';
 import { Skeleton } from './ui/skeleton';
 import { toast } from 'sonner';

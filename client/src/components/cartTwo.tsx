@@ -4,8 +4,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { BsBlockquoteLeft } from "react-icons/bs";
-import { BsBookmarks } from "react-icons/bs";
+ 
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { HiOutlineDotsCircleHorizontal } from "react-icons/hi";
 import numeral from "numeral";

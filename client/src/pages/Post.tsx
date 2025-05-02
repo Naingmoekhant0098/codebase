@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Input } from "@/components/ui/input";
@@ -27,7 +27,7 @@ import { RxCrossCircled } from "react-icons/rx";
 
 import { fetchApi } from "@/api/fetchApi";
 import api from "@/api/axios";
-import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
 import {
   Dialog,
   DialogContent,
@@ -36,12 +36,11 @@ import {
 } from "@/components/ui/dialog";
 import Select from "react-select";
 import tags from "@/lib/tags.json";
-import { set } from "react-hook-form";
+ 
 function Post() {
   const quillRef = useRef(null);
   const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
-  const [image, setImage] = useState("");
+ 
   const [content, setContent] = useState("");
   const [progress, setProgress] = useState(0);
   const [short_des, setShortDes] = useState("");
@@ -206,7 +205,7 @@ function Post() {
   const clearAllFields = () => {
     setTitle("");
     setSelectedOption(null)
-    setImage("");
+    
     setContent("");
     setShortDes("");
     setDownloadImage("");

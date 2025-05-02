@@ -1,14 +1,14 @@
-import React, { useEffect, useId, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
+  
   SheetHeader,
-  SheetTitle,
+ 
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Separator } from "@/components/ui/separator";
+ 
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { HiDotsVertical } from "react-icons/hi";
 import { Button } from "./ui/button";
@@ -16,34 +16,32 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
+  
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { token_descrypt } from "@/Services/Decrypt";
 import api from "@/api/axios";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+ 
 import { toast } from "sonner";
 import io from 'socket.io-client'
-import { APP_URL } from "@/Config";
-import { set } from "react-hook-form";
+ 
+ 
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import moment from "moment";
 // const formatted = moment().format('D-M');
 function messageSheet(userData:any) {
-  const [isAccept, setIsAccept] = React.useState(false);
+ 
   const[isBlock,setIsBlock]=React.useState(false)
    const encryptedToken = localStorage.getItem("access_token");
     const userId = (token_descrypt(encryptedToken) as { id: string })?.id;
    const queryClient = useQueryClient();
    const [message,setMessage]=useState<any>("")
-   const { username } = useParams();
+   
    const [onlineUsers, setOnlineUsers] = useState<any>([]);
    const app_url = "http://localhost:3000";
    const socket = React.useMemo(() => io(app_url, { autoConnect: false }), [app_url]);
-   const isAccepted = userData.userData.user.requestedUserList.find((u:any) =>u.userId==userId );
-   
+    
   useEffect(() => {
     socket.connect();
 
@@ -71,36 +69,7 @@ function messageSheet(userData:any) {
   // });
  
   
-  const handleRequest = async () => {
-
-    try {
-      const response = await api.put(
-        "/auth/request-to-accept-messages",
-        {
-          userId: userData.userData?.user._id,
-          requestUserId: userId,
-        }
-      );
-      if(response.status===200){
-        // queryClient.invalidateQueries({ queryKey: ["profileData", username?.replace("@", "")] });
-        queryClient.setQueryData(["profileData", username?.replace("@", "")], (oldData:any) => {
-          const updatedUser = {
-            ...oldData,
-            requestedUserList: [
-              ...oldData.requestedUserList,
-              { userId: userId, status: "accepted" },
-            ],
-          };
-          return updatedUser;
-        }
-        );
-        setIsAccept(true);
-        toast.success("Request sent successfully");
-      }   
-    } catch (error) {
-      console.error("Error sending request:", error);
-    }
-  };
+ 
 
  const isActive = onlineUsers.find((user:any) => user.userId === userData.userData?.user._id);
   socket.on("receiveMessage", (data) => {
@@ -236,7 +205,7 @@ useEffect(() => {
                   data?.length > 0 ? (
                     data?.map((item:any, index:number) => (
                      
-                      <div className={`text-[13px]  flex  text-white  w-auto ${item?.senderId == userId && " justify-end"}`}>
+                      <div key={index} className={`text-[13px]  flex  text-white  w-auto ${item?.senderId == userId && " justify-end"}`}>
                         
                     <p className={`inline-block  px-5 py-2 pt-3 rounded-[12px]  ${item?.senderId == userId ? "rounded-br-none bg-gray-400" : 'bg-black rounded-bl-none'}`}>
                       <p>{item?.message}</p>

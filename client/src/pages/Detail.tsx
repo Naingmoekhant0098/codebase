@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import { IoShareOutline } from "react-icons/io5";
@@ -24,8 +24,7 @@ import api from "@/api/axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import moment from "moment";
 import { token_descrypt } from "@/Services/Decrypt";
-import { set } from "react-hook-form";
-import { Loader, Loader2 } from "lucide-react";
+ 
 import Comment from "@/components/comment";
 import { toast } from "sonner";
 const encryptedToken = localStorage.getItem("access_token");

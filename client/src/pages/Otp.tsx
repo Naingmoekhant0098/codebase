@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import  { useState } from "react";
+
 import { Button } from "@/components/ui/button";
-import { FaGoogle } from "react-icons/fa";
+
 import OtpInput from 'react-otp-input';
 
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import {  useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { fetchApi } from "@/api/fetchApi";
  

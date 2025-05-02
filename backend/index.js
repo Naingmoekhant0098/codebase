@@ -6,6 +6,7 @@ const postRouter = require("./routes/postRouter");
 const categoryRouter = require("./routes/categoryRouter");
 const dbConnect = require("./db/db");
 const socket = require('socket.io');
+const path = require("path");
 const http = require('http');
 // const Message = require('./models/Message'); // Assuming you have a Message model
 

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import  { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { FaGoogle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
