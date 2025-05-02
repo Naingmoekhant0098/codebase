@@ -17,81 +17,220 @@ import {
 import { Button } from "./ui/button";
 import { SlLike } from "react-icons/sl";
 import { AiOutlineComment } from "react-icons/ai";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+ 
+ 
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { token_descrypt } from "@/Services/Decrypt";
+import { IoMdBookmark } from "react-icons/io";
+import { CiBookmark } from "react-icons/ci";
+import moment from "moment";
 import api from "@/api/axios";
+import { Link } from "react-router-dom";
+ 
+const encryptedToken = localStorage.getItem("access_token");
+const userId = (token_descrypt(encryptedToken) as { id: string })?.id;
+ 
 interface postProp {
-  title: string;
-  description: string;
-  slug: string;
-  cover_image: string;
-  likes: [];
-  author_id: string;
+  favs:any;
+    handleBookmark: any;
+    handleLike: any;
+    _id: string;
+    title: string;
+    description: string;
+    slug: string;
+    cover_image: string;
+    likes: string[];
+    createdAt : Date;
+    author_id: {
+      profile: string;
+      username: string;
+      name?: string | null;
+      bio?: string;
+      _id: string;
+      followers?: string[];
+      favourites?:string[];
+      createdAt: Date;
+      handleLike: (userId: string, postId: string) => void;
+      handleBookmark : (userId: string, postId: string) => void;
+      favs?: string[];
+  }
 }
-function CardTwo(post: postProp) {
-  const fetchUser = async (id: string | undefined) => {
-    try {
-      const response = await api.get("/auth/get-user?author_id=" + id);
+function CardTwo( post:postProp,) {
+  const queryClient = useQueryClient();
+  
+   const likeFunction = post?.handleLike;
+   const bookmarkFunction = post?.handleBookmark;  
+   const username = (token_descrypt(encryptedToken) as { id: string ,username:string})?.username;
+   const fetchUserData = async (username: string | undefined) => {
+     try {
+       const response = await api.get(
+         "/auth/get-user?username=" + username?.replace("@", "")
+       );
+       return response?.data?.data;
+     } catch (error) {}
+   };
+   const { isLoading, error, data } = useQuery({
+     queryKey: ["profileData", username?.replace("@", "")],
+     queryFn: () => fetchUserData(username?.replace("@", "")),
+   });
 
-      return response?.data?.data;
-    } catch (error) {
-      console.log(error);
+
+   const handleFollowUpdate = async (
+    userId: string,
+    followedUserId: string,
+    postId: string
+  ) => {
+    try {
+      const response = await api.put(
+        `/auth/follow-user?userId=${userId}&followedUserId=${followedUserId}`
+      );
+      return response.data;
+    } catch (error: any) {
+      console.log(error.message);
     }
   };
-  const { error, data } = useQuery({
-    queryKey: ["userData", post?.author_id],
-    queryFn: () => fetchUser(post?.author_id),
+  const followMutation = useMutation({
+    mutationFn: ({
+      userId,
+      followedUserId,
+      postId,
+    }: {
+      userId: string;
+      followedUserId: string;
+      postId: string;
+    }) => handleFollowUpdate(userId, followedUserId, postId),
+    onMutate: async (newTodo) => {
+     
+      const previousTodos = queryClient.getQueryData(["posts"]);
+
+      queryClient.setQueryData(["posts"], (old: any) => {
+        const updatedPosts = old?.posts?.map((post: any) => {
+          if (post._id === newTodo.postId) {
+            const updatedFollowers = post?.author_id?.followers?.includes(
+              userId
+            )
+              ? post?.author_id?.followers?.filter(
+                  (follower: string) => follower !== userId
+                )
+              : [...post?.author_id?.followers, userId];
+
+            return {
+              ...post,
+              author_id: {
+                ...post.author_id,
+                followers: updatedFollowers,
+              },
+            };
+          }
+          return post;
+        });
+        return {
+          ...old,
+          posts: updatedPosts,
+        };
+      });
+
+      return { previousTodos };
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+    onSuccess: () => {
+      console.log("Followed successfully");
+      // queryClient.invalidateQueries({ queryKey: ["userData", author_id] });
+    },
+    onSettled: () => {
+      //  queryClient.invalidateQueries({ queryKey: ["userData", author_id] });
+    },
   });
 
+  const handleFollow = (
+    userId: string,
+    followedUserId: string,
+    postId: string
+  ) => {
+    followMutation.mutate({ userId, followedUserId, postId });
+  };
+   
+  
   return (
     <div className=" ">
-      <img src={post?.cover_image} alt="" className="w-full" />
+        <Link to={"/detail/" + post?.slug}>
+       <LazyLoadImage
+                    alt={"Not found"}
+                    effect="blur"
+                   
+                    src={post?.cover_image}  
+                  className="w-full h-[200px] object-cover rounded-md"
+                    wrapperProps={{
+                      // If you need to, you can tweak the effect transition using the wrapper style.
+                      style: {transitionDelay: "1s"},
+                  }}
+                  />
+                  </Link>
+      {/* <img src={post?.cover_image} alt="" className="w-full" /> */}
       <div className="flex gap-2 mt-2 items-center">
         <img
-          src={data?.user?.profile}
+          src={post?.author_id?.profile}
           alt=""
           className="rounded-full w-6 h-6"
         />
         <div className=" text-[12px]  text-gray-50">
           <HoverCard>
             <HoverCardTrigger asChild>
+                <Link to={"/profile/@" + post?.author_id?.username}>
               <Button variant="link" className=" font-light ps-0 text-[13px]">
-                {data?.user.name !== null ? (
-                  <p className=" capitalize">{data?.user.name}</p>
+                {post?.author_id?.name !== null ? (
+                  <p className=" capitalize">{post?.author_id?.name}</p>
                 ) : (
-                  <p className=" capitalize">{data?.user?.username}</p>
+                  <p className=" capitalize">{post?.author_id?.username}</p>
                 )}
               </Button>
+              </Link>
             </HoverCardTrigger>
             <HoverCardContent className="w-80">
               <div className="flex justify-between space-x-4">
                 <div className="space-y-1">
                   <div className=" flex items-center gap-4">
                     <img
-                      src={data?.user?.profile}
+                      src={post?.author_id?.profile}
                       alt=""
                       className="rounded-full w-10 h-10"
                     />
                   <div className=" flex items-center justify-between  w-60">
                   <div >
                       <div className=" font-light ps-0 text-[13px]">
-                        {data?.user.name !== null ? (
-                          <p className=" capitalize">{data?.user.name}</p>
+                        {post?.author_id?.name !== null ? (
+                          <p className=" capitalize">{post?.author_id?.name}</p>
                         ) : (
-                          <p className=" capitalize">{data?.user?.username}</p>
+                          <p className=" capitalize">{post?.author_id?.username}</p>
                         )}
                       </div>
                       <div className=" font-light ps-0 text-[13px]">
                         
-                          <p className=" capitalize">{data?.user.followers.length} Followers</p>
+                          <p className=" capitalize">{post?.author_id?.followers?.length} Followers</p>
                         
                       </div>
                     </div>
-                    <Button className=" text-[12px] rounded-full" size={'sm'}>Follow</Button>
+                   {/* {post?.author_id._id !== userId && (
+                                               <Button
+                                                 className=" text-[12px] rounded-full"
+                                                 size={"sm"}
+                                                 onClick={() =>
+                                                   handleFollow(userId, post?.author_id._id, post?._id)
+                                                 }
+                                               >
+                                                 {!post?.author_id?.followers?.includes(userId)
+                                                   ? "Follow"
+                                                   : "Unfollow"}
+                                               </Button>
+                                             )} */}
                   </div>
 
                   </div>
                   <p className="text-sm mt-2">
-                   {data?.user?.bio}
+                   {post?.author_id?.bio}
                   </p>
                   <div className="flex items-center pt-2">
                     <span className="text-xs text-muted-foreground">
@@ -104,19 +243,27 @@ function CardTwo(post: postProp) {
           </HoverCard>
         </div>
       </div>
+      <Link to={"/detail/" + post?.slug}>
       <div className=" text-xl font-semibold line-clamp-2">{post?.title}</div>
+      </Link>
       <div className=" mt-2 text-gray-500 text-[14px] line-clamp-2 font-[400]">
         {post?.description}
       </div>
       <div className=" mt-5 flex items-center justify-between">
         <div className=" flex items-center gap-5">
-          <div className=" text-[13px] opacity-70 cursor-pointer">Jan 6</div>
+          <div className=" text-[13px] opacity-70 cursor-pointer">
+             {moment(post?.createdAt).format("MMM D")}
+          </div>
           <div className="flex gap-2 items-center opacity-70">
-            <SlLike className=" text-[16px] cursor-pointer" />
+            <SlLike
+                             className=" text-[16px] cursor-pointer  "
+                             color={post?.likes?.includes(userId) ? "red" : "black"}
+                             onClick={() => likeFunction(userId, post?._id)}
+                           />
             <div className=" text-[14px]  ">
               {post?.likes?.length < 1000
-                ? numeral(post?.likes.length).format("0a")
-                : numeral(post?.likes.length).format("0.0a")}
+                ? numeral(post?.likes?.length).format("0a")
+                : numeral(post?.likes?.length).format("0.0a")}
             </div>
           </div>
           <div className="flex gap-2 items-center opacity-70 cursor-pointer">
@@ -125,25 +272,21 @@ function CardTwo(post: postProp) {
           </div>
         </div>
         <div className=" flex items-center gap-5">
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-              className="bk cursor-pointer"
-            >
-              <path
-                fill="#000"
-                d="M17.5 1.25a.5.5 0 0 1 1 0v2.5H21a.5.5 0 0 1 0 1h-2.5v2.5a.5.5 0 0 1-1 0v-2.5H15a.5.5 0 0 1 0-1h2.5zm-11 4.5a1 1 0 0 1 1-1H11a.5.5 0 0 0 0-1H7.5a2 2 0 0 0-2 2v14a.5.5 0 0 0 .8.4l5.7-4.4 5.7 4.4a.5.5 0 0 0 .8-.4v-8.5a.5.5 0 0 0-1 0v7.48l-5.2-4a.5.5 0 0 0-.6 0l-5.2 4z"
-              ></path>
-            </svg>
-          </div>
-          {/* <div>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="aqd"><path fill="#000" d="M7.5 3.75a2 2 0 0 0-2 2v14a.5.5 0 0 0 .8.4l5.7-4.4 5.7 4.4a.5.5 0 0 0 .8-.4v-14a2 2 0 0 0-2-2z"></path></svg>
-                </div> */}
-
+           <div className=" flex ">
+                         {data?.user?.favourites?.includes(post?._id) ? (
+                           <IoMdBookmark
+                             size={23}
+                             className=" mt-[2px] cursor-pointer"
+                             onClick={() => bookmarkFunction(userId, post?._id)}
+                           />
+                         ) : (
+                           <CiBookmark
+                             size={23}
+                             className=" mt-[2px] cursor-pointer"
+                             onClick={() => bookmarkFunction(userId, post?._id)}
+                           />
+                         )}
+                       </div>
           <Popover>
             <PopoverTrigger className=" mb-0">
               {" "}
@@ -157,4 +300,4 @@ function CardTwo(post: postProp) {
   );
 }
 
-export default CardTwo;
+export default React.memo(CardTwo);

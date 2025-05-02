@@ -7,6 +7,7 @@ export const fetchApi = async ({
   headers = {
     "Content-Type": "application/json",
     accept: "application/json",
+    Authorization: '',
   },
 }) => {
   const App_Url = APP_URL + endpoint;

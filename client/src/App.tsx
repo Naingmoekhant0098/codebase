@@ -29,7 +29,7 @@ function App() {
         <Route path="/confirm-password" element={<Password />} />
         <Route element={<Prevent />}>
           <Route path="/" element={<Home />} />
-          <Route path="/detail/:id" element={<Detail />} />
+          <Route path="/detail/:slug" element={<Detail />} />
           <Route path="/post" element={<Post />} />
           <Route path="/profile/:username" element={<Profile />} />
         </Route>

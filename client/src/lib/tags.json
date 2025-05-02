@@ -1,0 +1,650 @@
+[
+  {
+    "value": "frontend",
+    "label": "Frontend"
+  },
+  {
+    "value": "backend",
+    "label": "Backend"
+  },
+  {
+    "value": "full stack",
+    "label": "Full Stack"
+  },
+  {
+    "value": "devops",
+    "label": "DevOps"
+  },
+  {
+    "value": "database",
+    "label": "Database"
+  },
+  {
+    "value": "cloud",
+    "label": "Cloud"
+  },
+  {
+    "value": "cybersecurity",
+    "label": "Cybersecurity"
+  },
+  {
+    "value": "mobile development",
+    "label": "Mobile Development"
+  },
+  {
+    "value": "web development",
+    "label": "Web Development"
+  },
+  {
+    "value": "game development",
+    "label": "Game Development"
+  },
+  {
+    "value": "data science",
+    "label": "Data Science"
+  },
+  {
+    "value": "machine learning",
+    "label": "Machine Learning"
+  },
+  {
+    "value": "ai",
+    "label": "AI"
+  },
+  {
+    "value": "ui/ux design",
+    "label": "UI/UX Design"
+  },
+  {
+    "value": "software architecture",
+    "label": "Software Architecture"
+  },
+  {
+    "value": "testing",
+    "label": "Testing"
+  },
+  {
+    "value": "qa",
+    "label": "QA"
+  },
+  {
+    "value": "api development",
+    "label": "API Development"
+  },
+  {
+    "value": "rest api",
+    "label": "REST API"
+  },
+  {
+    "value": "graphql",
+    "label": "GraphQL"
+  },
+  {
+    "value": "grpc",
+    "label": "gRPC"
+  },
+  {
+    "value": "microservices",
+    "label": "Microservices"
+  },
+  {
+    "value": "monolith",
+    "label": "Monolith"
+  },
+  {
+    "value": "serverless",
+    "label": "Serverless"
+  },
+  {
+    "value": "event-driven",
+    "label": "Event-driven"
+  },
+  {
+    "value": "authentication",
+    "label": "Authentication"
+  },
+  {
+    "value": "authorization",
+    "label": "Authorization"
+  },
+  {
+    "value": "oauth2",
+    "label": "OAuth2"
+  },
+  {
+    "value": "jwt",
+    "label": "JWT"
+  },
+  {
+    "value": "encryption",
+    "label": "Encryption"
+  },
+  {
+    "value": "https",
+    "label": "HTTPS"
+  },
+  {
+    "value": "cors",
+    "label": "CORS"
+  },
+  {
+    "value": "csrf protection",
+    "label": "CSRF Protection"
+  },
+  {
+    "value": "xss protection",
+    "label": "XSS Protection"
+  },
+  {
+    "value": "access control",
+    "label": "Access Control"
+  },
+  {
+    "value": "ci/cd",
+    "label": "CI/CD"
+  },
+  {
+    "value": "git",
+    "label": "Git"
+  },
+  {
+    "value": "github",
+    "label": "GitHub"
+  },
+  {
+    "value": "gitlab",
+    "label": "GitLab"
+  },
+  {
+    "value": "docker",
+    "label": "Docker"
+  },
+  {
+    "value": "kubernetes",
+    "label": "Kubernetes"
+  },
+  {
+    "value": "terraform",
+    "label": "Terraform"
+  },
+  {
+    "value": "ansible",
+    "label": "Ansible"
+  },
+  {
+    "value": "jenkins",
+    "label": "Jenkins"
+  },
+  {
+    "value": "github actions",
+    "label": "GitHub Actions"
+  },
+  {
+    "value": "aws",
+    "label": "AWS"
+  },
+  {
+    "value": "google cloud",
+    "label": "Google Cloud"
+  },
+  {
+    "value": "azure",
+    "label": "Azure"
+  },
+  {
+    "value": "heroku",
+    "label": "Heroku"
+  },
+  {
+    "value": "vercel",
+    "label": "Vercel"
+  },
+  {
+    "value": "netlify",
+    "label": "Netlify"
+  },
+  {
+    "value": "linux",
+    "label": "Linux"
+  },
+  {
+    "value": "nginx",
+    "label": "Nginx"
+  },
+  {
+    "value": "apache",
+    "label": "Apache"
+  },
+  {
+    "value": "node.js",
+    "label": "Node.js"
+  },
+  {
+    "value": "express.js",
+    "label": "Express.js"
+  },
+  {
+    "value": "python",
+    "label": "Python"
+  },
+  {
+    "value": "flask",
+    "label": "Flask"
+  },
+  {
+    "value": "django",
+    "label": "Django"
+  },
+  {
+    "value": "fastapi",
+    "label": "FastAPI"
+  },
+  {
+    "value": "java",
+    "label": "Java"
+  },
+  {
+    "value": "spring boot",
+    "label": "Spring Boot"
+  },
+  {
+    "value": "php",
+    "label": "PHP"
+  },
+  {
+    "value": "laravel",
+    "label": "Laravel"
+  },
+  {
+    "value": "c#",
+    "label": "C#"
+  },
+  {
+    "value": ".net",
+    "label": ".NET"
+  },
+  {
+    "value": "ruby",
+    "label": "Ruby"
+  },
+  {
+    "value": "ruby on rails",
+    "label": "Ruby on Rails"
+  },
+  {
+    "value": "go",
+    "label": "Go"
+  },
+  {
+    "value": "rust",
+    "label": "Rust"
+  },
+  {
+    "value": "html",
+    "label": "HTML"
+  },
+  {
+    "value": "css",
+    "label": "CSS"
+  },
+  {
+    "value": "javascript",
+    "label": "JavaScript"
+  },
+  {
+    "value": "typescript",
+    "label": "TypeScript"
+  },
+  {
+    "value": "react",
+    "label": "React"
+  },
+  {
+    "value": "vue.js",
+    "label": "Vue.js"
+  },
+  {
+    "value": "angular",
+    "label": "Angular"
+  },
+  {
+    "value": "svelte",
+    "label": "Svelte"
+  },
+  {
+    "value": "next.js",
+    "label": "Next.js"
+  },
+  {
+    "value": "nuxt.js",
+    "label": "Nuxt.js"
+  },
+  {
+    "value": "tailwind css",
+    "label": "Tailwind CSS"
+  },
+  {
+    "value": "bootstrap",
+    "label": "Bootstrap"
+  },
+  {
+    "value": "postgresql",
+    "label": "PostgreSQL"
+  },
+  {
+    "value": "mysql",
+    "label": "MySQL"
+  },
+  {
+    "value": "mongodb",
+    "label": "MongoDB"
+  },
+  {
+    "value": "sqlite",
+    "label": "SQLite"
+  },
+  {
+    "value": "firebase",
+    "label": "Firebase"
+  },
+  {
+    "value": "redis",
+    "label": "Redis"
+  },
+  {
+    "value": "cassandra",
+    "label": "Cassandra"
+  },
+  {
+    "value": "prisma",
+    "label": "Prisma"
+  },
+  {
+    "value": "sequelize",
+    "label": "Sequelize"
+  },
+  {
+    "value": "mongoose",
+    "label": "Mongoose"
+  },
+  {
+    "value": "jest",
+    "label": "Jest"
+  },
+  {
+    "value": "mocha",
+    "label": "Mocha"
+  },
+  {
+    "value": "chai",
+    "label": "Chai"
+  },
+  {
+    "value": "vitest",
+    "label": "Vitest"
+  },
+  {
+    "value": "pytest",
+    "label": "Pytest"
+  },
+  {
+    "value": "postman",
+    "label": "Postman"
+  },
+  {
+    "value": "swagger",
+    "label": "Swagger"
+  },
+  {
+    "value": "openapi",
+    "label": "OpenAPI"
+  },
+  {
+    "value": "selenium",
+    "label": "Selenium"
+  },
+  {
+    "value": "cypress",
+    "label": "Cypress"
+  },
+  {
+    "value": "tdd",
+    "label": "TDD"
+  },
+  {
+    "value": "bdd",
+    "label": "BDD"
+  },
+  {
+    "value": "logging",
+    "label": "Logging"
+  },
+  {
+    "value": "monitoring",
+    "label": "Monitoring"
+  },
+  {
+    "value": "prometheus",
+    "label": "Prometheus"
+  },
+  {
+    "value": "grafana",
+    "label": "Grafana"
+  },
+  {
+    "value": "sentry",
+    "label": "Sentry"
+  },
+  {
+    "value": "new relic",
+    "label": "New Relic"
+  },
+  {
+    "value": "elastic stack",
+    "label": "Elastic Stack"
+  },
+  {
+    "value": "ui design",
+    "label": "UI Design"
+  },
+  {
+    "value": "figma",
+    "label": "Figma"
+  },
+  {
+    "value": "adobe xd",
+    "label": "Adobe XD"
+  },
+  {
+    "value": "sketch",
+    "label": "Sketch"
+  },
+  {
+    "value": "responsive design",
+    "label": "Responsive Design"
+  },
+  {
+    "value": "accessibility",
+    "label": "Accessibility"
+  },
+  {
+    "value": "internationalization",
+    "label": "Internationalization"
+  },
+  {
+    "value": "agile",
+    "label": "Agile"
+  },
+  {
+    "value": "scrum",
+    "label": "Scrum"
+  },
+  {
+    "value": "kanban",
+    "label": "Kanban"
+  },
+  {
+    "value": "software engineering",
+    "label": "Software Engineering"
+  },
+  {
+    "value": "design patterns",
+    "label": "Design Patterns"
+  },
+  {
+    "value": "oop",
+    "label": "OOP"
+  },
+  {
+    "value": "functional programming",
+    "label": "Functional Programming"
+  },
+  {
+    "value": "data structures",
+    "label": "Data Structures"
+  },
+  {
+    "value": "algorithms",
+    "label": "Algorithms"
+  },
+  {
+    "value": "performance optimization",
+    "label": "Performance Optimization"
+  },
+  {
+    "value": "code review",
+    "label": "Code Review"
+  },
+  {
+    "value": "version control",
+    "label": "Version Control"
+  },
+  {
+    "value": "package management",
+    "label": "Package Management"
+  },
+  {
+    "value": "npm",
+    "label": "npm"
+  },
+  {
+    "value": "yarn",
+    "label": "yarn"
+  },
+  {
+    "value": "pip",
+    "label": "pip"
+  },
+  {
+    "value": "composer",
+    "label": "Composer"
+  },
+  {
+    "value": "shell scripting",
+    "label": "Shell Scripting"
+  },
+  {
+    "value": "bash",
+    "label": "Bash"
+  },
+  {
+    "value": "zsh",
+    "label": "Zsh"
+  },
+  {
+    "value": "networking",
+    "label": "Networking"
+  },
+  {
+    "value": "load balancing",
+    "label": "Load Balancing"
+  },
+  {
+    "value": "cdn",
+    "label": "CDN"
+  },
+  {
+    "value": "websockets",
+    "label": "WebSockets"
+  },
+  {
+    "value": "message queues",
+    "label": "Message Queues"
+  },
+  {
+    "value": "rabbitmq",
+    "label": "RabbitMQ"
+  },
+  {
+    "value": "kafka",
+    "label": "Kafka"
+  },
+  {
+    "value": "webassembly",
+    "label": "WebAssembly"
+  },
+  {
+    "value": "progressive web apps",
+    "label": "Progressive Web Apps"
+  },
+  {
+    "value": "pwas",
+    "label": "PWAs"
+  },
+  {
+    "value": "cross-platform apps",
+    "label": "Cross-platform Apps"
+  },
+  {
+    "value": "react native",
+    "label": "React Native"
+  },
+  {
+    "value": "flutter",
+    "label": "Flutter"
+  },
+  {
+    "value": "swift",
+    "label": "Swift"
+  },
+  {
+    "value": "kotlin",
+    "label": "Kotlin"
+  },
+  {
+    "value": "xamarin",
+    "label": "Xamarin"
+  },
+  {
+    "value": "unity",
+    "label": "Unity"
+  },
+  {
+    "value": "unreal engine",
+    "label": "Unreal Engine"
+  },
+  {
+    "value": "blockchain",
+    "label": "Blockchain"
+  },
+  {
+    "value": "solidity",
+    "label": "Solidity"
+  },
+  {
+    "value": "smart contracts",
+    "label": "Smart Contracts"
+  },
+  {
+    "value": "ethical hacking",
+    "label": "Ethical Hacking"
+  },
+  {
+    "value": "penetration testing",
+    "label": "Penetration Testing"
+  },
+  {
+    "value": "bug bounty",
+    "label": "Bug Bounty"
+  }
+]

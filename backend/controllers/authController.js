@@ -1,10 +1,13 @@
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
+const Message = require("../models/Message");
 const Post = require("../models/Post");
 const jwt = require("jsonwebtoken");
+const mongoose=require('mongoose')
 const { sendOtp } = require("../utils/sendOtp");
 const { isUserUnique } = require("../utils/checkUnique");
+const { Types } = require('mongoose');
 let otpData = {};
 const OTP_Expire_Date = 60 * 5 * 1000; //will expire after 5 min
 const generateOtp = () => {
@@ -130,7 +133,7 @@ exports.verifyOtp = async (req, res, next) => {
       err.code = "User_NotExist";
       return next(err);
     }
-    const token = jwt.sign({ id: isUserExist._id }, process.env.JWT_TOKEN, {
+    const token = jwt.sign({ id: isUserExist._id,username : isUserExist.username }, process.env.JWT_TOKEN, {
       expiresIn: "7d",
     });
     const { password: pass, isAdmin, ...rest } = isUserExist._doc;
@@ -149,7 +152,8 @@ exports.verifyOtp = async (req, res, next) => {
   }
 };
 exports.signup = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password,username } = req.body;
+  console.log(email, password,username);
   const hashPassword = bcrypt.hashSync(password, 10);
   if (!email || !password) {
     const err = new Error("Email and password is required");
@@ -166,12 +170,13 @@ exports.signup = async (req, res, next) => {
   const user = new User({
     email: email,
     password: hashPassword,
-    username: email.split("@")[0],
+    username:username
+   
   });
   try {
     const savedUser = await user.save();
     const tokenExpireDate = Date.now() + 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
-    const token = jwt.sign({ id: savedUser._id }, process.env.JWT_TOKEN, {
+    const token = jwt.sign({ id: savedUser._id,username:username }, process.env.JWT_TOKEN, {
       expiresIn: tokenExpireDate,
     });
     const { password: pass, ...rest } = savedUser._doc;
@@ -190,9 +195,10 @@ exports.signup = async (req, res, next) => {
   }
 };
 exports.updatName = async (req, res, next) => {
-  const { email, username, bio, profile } = req.body;
-  if (!email || !username) {
-    const err = new Error("Email and username is required");
+  const { email} = req.body;
+  
+  if (!email) {
+    const err = new Error("Email is required to update user");
     err.status = 400;
     err.code = "Creditial_Required";
     return next(err);
@@ -201,7 +207,7 @@ exports.updatName = async (req, res, next) => {
     const updatedUser = await User.updateOne(
       { email: email },
       {
-        $set: { username, bio, profile },
+        $set: req.body,
       }
     );
 
@@ -277,18 +283,155 @@ exports.getUser = async (req, res, next) => {
       return next(err);
     }
     const { password: pass, isAdmin, ...rest } = user._doc;
-    const userPosts = await Post.find({ author_id: user._id });
-    const favouritePosts = await Post.find({
-      favauritedUserLists: { $in: [user._id] },
-    });
+    const authorId = new mongoose.Types.ObjectId(user._id);
+    const userPosts = await Post.find({author_id : authorId}).populate("author_id");
+    
+  
+    // const favouritePosts = await Post.find({
+    //   favauritedUserLists: { $in: [user._id] },
+    // });
     res.status(200).json({
       message: "User ",
       status: 200,
       data: {
         user: rest,
         posts: userPosts,
-        favourites: favouritePosts,
+        // favourites: favouritePosts,
       },
     });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error)
+  }
 };
+exports.requestToAcceptMessages= async (req, res, next) => {
+  const { userId, requestUserId } = req.body;
+  console.log(req.body)
+  try {
+    const isRequestedUserExist = await User.findOne({ _id: requestUserId });
+    if (!isRequestedUserExist) {
+      const err = new Error("Requested user not found");
+      err.status = 404;
+      return next(err);
+    }
+    const isRequestedUserExistInList = await User.findOne({
+      _id: userId,
+      requestedUserList: { $elemMatch: { userId: requestUserId } },
+    });
+    if (isRequestedUserExistInList) {
+      const err = new Error("Already requested");
+      err.status = 404;
+      return next(err);
+    }
+    await User.updateOne(
+      { _id: userId },
+      {
+        $push: {
+          requestedUserList: {
+            userId: requestUserId,
+            status: "pending",
+          },
+        },
+      }
+    );
+    res.status(200).json({
+      message: "Request sent successfully",
+      status: 200,
+    });
+    
+  } catch (error) {
+    const err = new Error(error.message);
+    err.status = error.status;
+    return next(err);
+    
+  }
+}
+exports.acceptRequest = async(req,res,next)=>{
+  const {userId,status,acceptedBy} = req.query;
+   console.log(req.query)
+  if (!userId || !status || !acceptedBy) {
+    const err = new Error("UserId, status and acceptedBy is required");
+    err.status = 400;
+    err.code = "Creditial_Required";
+    return next(err);
+  }
+  try {
+
+    const isSucced=await User.updateOne({_id:acceptedBy,"requestedUserList.userId":userId},
+      {
+        $set: {
+          "requestedUserList.$.status": status,
+        },
+      }
+    )
+
+    if(isSucced.modifiedCount == 0){
+      res.status(404).json({
+        message: "Failed to accept the request",
+        status: 404,
+      });
+    }
+    res.status(200).json({
+      message: "Request accepted successfully",
+      status: 200,
+    });
+    
+  } catch (error) {
+    
+  }
+  // res.status(200).json({data:req.query});
+}
+exports.sendMessage = async (req, res, next) => {
+  const { senderId, receiverId, message } = req.body;
+  console.log(req.body)
+  if (!senderId || !receiverId || !message) {
+    const err = new Error("SenderId, receiverId and message is required");
+    err.status = 400;
+    err.code = "Creditial_Required";
+    return next(err);
+  }
+  try {
+    const isUserExist = await User.findOne({ _id: senderId });
+    if (!isUserExist) {
+      const err = new Error("Sender not found");
+      err.status = 404;
+      return next(err);
+    }
+    const isReceiverExist = await User.findOne({ _id: receiverId });
+    if (!isReceiverExist) {
+      const err = new Error("Receiver not found");
+      err.status = 404;
+      return next(err);
+    }
+    const messageData = new Message({
+      senderId,
+      receiverId,
+      message,
+    });
+    await messageData.save();
+    res.status(200).json({
+      message: "Message sent successfully",
+      status: 200,
+    });
+  } catch (error) {
+    
+  }
+}
+exports.getMessages = async(req,res,next)=>{
+  const { senderId, receiverId } = req.query;
+ try {
+  const messages = await Message.find({
+    $or: [
+      { senderId: senderId, receiverId: receiverId },
+      { senderId: receiverId, receiverId: senderId },
+    ],
+  }).sort({ createdAt: 1 });
+  res.status(200).json(messages);
+  
+ } catch (error) {
+  
+  const err = new Error(error.message);
+  err.status = error.status;
+  return next(err);
+ }
+ 
+}

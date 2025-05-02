@@ -5,6 +5,9 @@ const authRouter = require("./routes/authRoutes");
 const postRouter = require("./routes/postRouter");
 const categoryRouter = require("./routes/categoryRouter");
 const dbConnect = require("./db/db");
+const socket = require('socket.io');
+const http = require('http');
+// const Message = require('./models/Message'); // Assuming you have a Message model
 
 require("dotenv").config();
 const app = express();
@@ -14,6 +17,57 @@ app.use(
     credentials : true
   })
 );
+const server = http.createServer(app);
+const io = socket(server, {
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+    credentials : true
+  },
+});
+const activeUsers = [];
+io.on('connection', (socket) => {
+  console.log('sever is connected')
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+  socket.on("new-user-add", (newUserId) => {
+  
+    if (!activeUsers.some((user) => user.userId === newUserId)) {
+      activeUsers.push({
+        userId: newUserId,
+        socketId: socket.id,
+      });
+    }
+   
+    io.emit("get-users", activeUsers);
+  });
+  socket.on('sendMessage', (msg) => {
+    const user = activeUsers.find((u) => u.userId == msg.receiverId);
+    
+    if (user) {
+      // Send the message to the recipient if they are online
+      socket.to(user.socketId).emit('receiveMessage', msg);
+      console.log("message send")
+    } else {
+      console.log(`User with ID ${msg.receiverId} is not online.`);
+      // Store the message for later delivery
+      // You can use a database or in-memory storage for this purpose
+      // Example: Save to a database
+      // const newMessage = new Message({
+      //   senderId: msg.senderId,
+      //   receiverId: msg.receiverId,
+      //   text: msg.text,
+      //   timestamp: new Date(),
+      // });
+      // newMessage.save()
+      //   .then(() => console.log('Message saved for offline user.'))
+      //   .catch((err) => console.error('Error saving message:', err));
+    }
+  });
+
+});
+
 app.use(cookieParser());
 app.use(express.json());
 
@@ -22,8 +76,9 @@ app.get("/", (req, res) => {
 });
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/posts", postRouter);
+
 app.use("/api/v1/category", categoryRouter);
-app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => {
   console.log("sever is running at port 3000");
 });
 

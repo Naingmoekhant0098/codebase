@@ -20,6 +20,8 @@ function Password() {
       password: "",
     },
   });
+  const navigate = useNavigate();
+  
 
   const onSubmit = async (data: any) => {
     try {
@@ -37,36 +39,9 @@ function Password() {
           },
         });
       }
-      const responseData = await fetchApi({
-        endpoint: "/auth/create-password",
-        data: {...data,email},
-      });
-      setIsLoading(false);
-      if (responseData.status !== 200) {
-        toast("Otp Error", {
-          description: responseData.message,
-          position: "top-center",
-          action: {
-            label: "Close",
-            onClick: () => {
-              console.log("Closed");
-            },
-          },
-        });
-      }
-    
-        toast("Success", {
-          description: responseData.message,
-          position: "top-center",
-          action: {
-            label: "Close",
-            onClick: () => {
-              console.log("Closed");
-            },
-          },
-        });
-        localStorage.setItem("access_token", responseData.user.token);
-        navigage("/create-username",{state : {email}});
+      console.log(email,data.password)
+      navigate('/create-username' ,{state : {email : email , password:data?.password , state : 'signup'}});
+     
     } catch (error: any) {
       toast("Error", {
         description: error.message,

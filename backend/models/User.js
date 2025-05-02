@@ -1,5 +1,6 @@
 const { timeStamp } = require("console");
 const mongoose = require("mongoose");
+const { type } = require("os");
 const userSchema = mongoose.Schema(
   {
     name: {
@@ -14,6 +15,10 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
       unique : true
+    },
+    requestedUserList:{
+      type:[],
+      default: [],
     },
     bio: {
       type: String,
@@ -40,6 +45,10 @@ const userSchema = mongoose.Schema(
       type: Array,
       default: [],
     },
+    favourites : {
+      type: Array,
+      default: [],
+    },
     isVerified: {
       type: Boolean,
       default: false,
@@ -49,8 +58,8 @@ const userSchema = mongoose.Schema(
       default: false,
     },
   },
-  { timeStamps: true }
+  { timestamps: true }
 );
 
-const User = mongoose.model("user", userSchema);
+const User = mongoose.model("User", userSchema);
 module.exports = User;

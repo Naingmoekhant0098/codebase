@@ -7,9 +7,10 @@ import { toast } from "sonner";
 
 function Username() {
   const location = useLocation();
-  const { email } = location.state || {};
+  const { email,password } = location.state || {};
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [username, setUsername] = useState<string>("");
+  console.log(email,password)
   const handleSubmit = async (e: any) => {
     console.log(username,email)
     e.preventDefault();
@@ -27,22 +28,53 @@ function Username() {
       }
       try {
         setIsLoading(true);
-        const responseData = await fetchApi({ endpoint: "/auth/update-username", data : {email,username} });
-        setIsLoading(false);
-        if (responseData.status !== 201) {
-          toast("Error", {
-            description: responseData.message,
-            position: "top-center",
-            action: {
-              label: "Close",
-              onClick: () => {
-                console.log("Closed");
-              },
-            },
-          });
-        }
+        // const responseData = await fetchApi({ endpoint: "/auth/update-username", data : {email,username} });
+        // setIsLoading(false);
+        // if (responseData.status !== 201) {
+        //   toast("Error", {
+        //     description: responseData.message,
+        //     position: "top-center",
+        //     action: {
+        //       label: "Close",
+        //       onClick: () => {
+        //         console.log("Closed");
+        //       },
+        //     },
+        //   });
+        // }
       
-        if(responseData.status===201){
+        // if(responseData.status===201){
+        //   toast("Success", {
+        //     description: responseData.message,
+        //     position: "top-center",
+        //     action: {
+        //       label: "Close",
+        //       onClick: () => {
+        //         console.log("Closed");
+        //       },
+        //     },
+        //   });
+         
+        //   // localStorage.setItem("access_token",responseData.user.token);
+        //   navigate('/');
+        // }
+   const responseData = await fetchApi({
+          endpoint: "/auth/create-password",
+          data: {password,email,username},
+        });
+        setIsLoading(false);
+        // if (responseData.status !== 200) {
+        //   toast("Otp Error", {
+        //     description: responseData.message,
+        //     position: "top-center",
+        //     action: {
+        //       label: "Close",
+        //       onClick: () => {
+        //         console.log("Closed");
+        //       },
+        //     },
+        //   });
+        // }
           toast("Success", {
             description: responseData.message,
             position: "top-center",
@@ -53,11 +85,10 @@ function Username() {
               },
             },
           });
-         
-          // localStorage.setItem("access_token",responseData.user.token);
-          navigate('/');
-        }
-  
+          localStorage.setItem("access_token", responseData.user.token);
+          if(localStorage.getItem("access_token")){
+            window.location.href = '/';
+          }
   
       } catch (error: any) {
         console.log(error);
@@ -79,7 +110,7 @@ function Username() {
   return (
     <div className=" w-[100vw] h-[100vh] flex items-center justify-center">
       <div className=" max-w-[400px] ">
-        <div className=" font-semibold text-3xl text-center">Username</div>
+        <div className=" font-semibold text-3xl text-center">Create Username</div>
         <div className="">
           <p className="mt-2 text-gray-600 text-base font-light text-[15px]">
             Create a unique username to personalize your experience.
@@ -108,34 +139,34 @@ function Username() {
             )}
           </Button>
         </form>
-        <Button
+        {/* <Button
           variant={"outline"}
           className="text-[14px] w-full py-6 mt-2 cursor-pointer"
         >
           <div className="" onClick={() => navigate("/")}>
             Skip For Now
           </div>
-        </Button>
-        <div className=" mt-4 flex flex-row items-center  gap-2">
+        </Button> */}
+        {/* <div className=" mt-4 flex flex-row items-center  gap-2">
           <div className="flex flex-1 h-0.5 bg-gray-200"></div>
           <div className="text-sm text-gray-500">or</div>
           <div className="flex flex-1 h-0.5 bg-gray-200"></div>
-        </div>
-        <Button
+        </div> */}
+        {/* <Button
           variant={"outline"}
           className="text-[14px] w-full py-6 mt-4 cursor-pointer"
         >
           <FaGoogle />
           <div className="">Continue with google</div>
-        </Button>
-        <div className=" text-center mt-6">
+        </Button> */}
+        {/* <div className=" text-center mt-6">
           <p className=" text-sm">
             Don't have an account ?{" "}
             <Link to={"/login"} className=" text-blue-600 cursor-pointer">
               Login
             </Link>
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

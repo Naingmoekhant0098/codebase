@@ -4,12 +4,40 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+      display: none;
+  }
+ /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+}
+}
+
 body{
   
   font-family: "Poppins", serif;
   font-weight: 300;
   font-style: normal;
 }
+
+.descriptionText img{
+   margin-top: 20px;
+   margin-bottom: 20px;
+   height: 400px;
+   width: 100%;
+    object-fit: cover;
+}
+
+.descriptionText p{
+  font-size: 16px;
+  line-height: 25px;
+}
+ 
+ 
+
 :root {
   --background: hsl(0 0% 100%);
   --foreground: hsl(0 0% 3.9%);
@@ -95,6 +123,19 @@ body{
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 }
+.showNav{
+  background-color: rgba(241, 225, 225, 0.041);
+  backdrop-filter: blur(5px);  
+}
+
+.hideNav{
+  transform: translateY(-100px)!important;
+}
+.topNav{
+  background-color: rgba(241, 225, 225, 0.041);
+  backdrop-filter: blur(5px);   
+}
+
 
 @layer base {
   * {
@@ -112,7 +153,81 @@ body{
 .ql-header{
   color: black;
 }
-
+.ql-syntax{
+  background-color: black;
+  color:white;
+  padding: 10px;
+  
+   
+}
+h3{
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 30px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+h2{
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 30px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+h5 span{
+  font-size: 16px;
+  background-color: white!important;
+  color: black!important;
+}
+h2 strong{
+  font-weight: 600!important;
+}
+h5 strong{
+  font-weight: 600!important;
+}
+.ring-offset-background{
+  display: none;
+}
+/* ul li.ql-align-justify{
+  list-style-type: square;
+  margin-top: 10px;
+  margin-bottom: 10px;
+} */
+h4{
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 30px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+h5{
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+ 
+}
+h6{
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 30px;
+  margin-bottom: 10px;
+ 
+}
+/* p{
+  font-size: 16px;
+  line-height: 25px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+} */
+/* .ql-editor blockquote{
+  font-size: 16px;
+  line-height: 25px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+} */
 .ql-editor img{
   width: 100%;
   height: 400px;
@@ -122,6 +237,59 @@ body{
   border-radius: 30px;
   
 }
+.descriptionText p a{
+  color: #3b82f6!important;
+  text-decoration: underline;
+}
+.descriptionText p span{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+ 
 
+.ql-editor {
+  font-size: 14px; /* Default font size */
+}
 
+.ql-size-small {
+  font-size: 12px;
+}
 
+.ql-size-normal {
+  font-size: 16px!important;
+}
+
+.ql-size-large {
+  font-size: 20px;
+}
+
+.ql-size-huge {
+  font-size: 24px;
+}
+@media screen {
+  @media (max-width: 600px) {
+
+.ql-container {
+  min-height: 300px!important;
+  overflow-y: scroll;
+}
+    body {
+      font-size: 14px;
+    }
+    .ql-editor {
+      font-size: 12px;
+    }
+    .ql-size-normal {
+      font-size: 14px!important;
+    }
+    .ql-size-large {
+      font-size: 18px;
+    }
+    .ql-size-huge {
+      font-size: 22px;
+    }
+  }
+  
+}
