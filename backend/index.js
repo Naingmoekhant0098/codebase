@@ -64,9 +64,7 @@ const __dir = path.resolve();
 app.use(cookieParser());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("app is running");
-});
+ 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/posts", postRouter);
 
