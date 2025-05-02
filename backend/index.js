@@ -14,14 +14,14 @@ require("dotenv").config();
 const app = express();
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:5173",'https://codebase-an4l.onrender.com/'],
     credentials : true
   })
 );
 const server = http.createServer(app);
 const io = socket(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173","https://codebase-an4l.onrender.com/"],
     methods: ["GET", "POST"],
     credentials : true
   },

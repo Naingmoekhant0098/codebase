@@ -39,7 +39,7 @@ function messageSheet(userData:any) {
    const [message,setMessage]=useState<any>("")
    
    const [onlineUsers, setOnlineUsers] = useState<any>([]);
-   const app_url = "http://localhost:3000";
+   const app_url = "https://codebase-an4l.onrender.com/";
    const socket = React.useMemo(() => io(app_url, { autoConnect: false }), [app_url]);
     
   useEffect(() => {
