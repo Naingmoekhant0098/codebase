@@ -51,22 +51,14 @@ io.on('connection', (socket) => {
       console.log("message send")
     } else {
       console.log(`User with ID ${msg.receiverId} is not online.`);
-      // Store the message for later delivery
-      // You can use a database or in-memory storage for this purpose
-      // Example: Save to a database
-      // const newMessage = new Message({
-      //   senderId: msg.senderId,
-      //   receiverId: msg.receiverId,
-      //   text: msg.text,
-      //   timestamp: new Date(),
-      // });
-      // newMessage.save()
-      //   .then(() => console.log('Message saved for offline user.'))
-      //   .catch((err) => console.error('Error saving message:', err));
+      
     }
   });
 
 });
+
+
+const __dir = path.resolve();
 
 app.use(cookieParser());
 app.use(express.json());
@@ -81,7 +73,10 @@ app.use("/api/v1/category", categoryRouter);
 server.listen(process.env.PORT, () => {
   console.log("sever is running at port 3000");
 });
-
+app.use(express.static(path.join(__dir,'client/dist')))
+app.use('*',(req,res)=>{
+  res.sendFile(path.join(__dir,'client','dist','index.html'))
+})
 app.use((err, req, res, next) => {
   const status = err.status || 500;
   const message = err.message;

@@ -1,0 +1,22 @@
+{
+  "name": "codebase",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "node backend/index.js",
+    "build" : "npm install && npm install --prefix client && npm run build --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Naingmoekhant0098/codebase.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Naingmoekhant0098/codebase/issues"
+  },
+  "homepage": "https://github.com/Naingmoekhant0098/codebase#readme",
+  "description": ""
+}
