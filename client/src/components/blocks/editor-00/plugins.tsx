@@ -12,7 +12,7 @@ export function Plugins() {
       setFloatingAnchorElem(_floatingAnchorElem);
     }
   };
-
+console.log(floatingAnchorElem)
   return (
     <div className="relative">
       {/* toolbar plugins */}
