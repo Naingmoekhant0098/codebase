@@ -47,7 +47,7 @@ function Detail() {
     } catch (error) {}
   };
 
-  const { isLoading, error, data } = useQuery({
+  const { isLoading, data } = useQuery({
     queryKey: ["post", slug],
     queryFn: () => fetchPosts(),
   });
@@ -65,8 +65,7 @@ function Detail() {
   };
 
   const {
-    isLoading: similarLoading,
-    error: similarError,
+    
     data: similarData,
   } = useQuery({
     queryKey: ["similar", slug],
@@ -82,8 +81,7 @@ function Detail() {
   
 
   const {
-    isLoading: recommendLoading,
-    error: recommendError,
+    
     data: recommdendData,
   } = useQuery({
     queryKey: ["recommend"],

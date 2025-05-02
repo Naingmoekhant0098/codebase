@@ -9,15 +9,14 @@ function Home() {
 
   const [hasMore,setHasMore] = useState(true)
   const[page,setPage] = useState(1)
-  const[limit,setLimit] = useState(5)
   
   const fetchPosts = async () => {
     try {
       const response = await api.get(
-        "/posts/get-posts?order=desc&page=" + page + "&limit=" + limit
+        "/posts/get-posts?order=desc&page=" + page + "&limit=" + 5
       );
     
-      if (response?.data?.data?.posts?.length < limit) {
+      if (response?.data?.data?.posts?.length < 5) {
         setHasMore(false);
       } else {
         setPage((prevPage) => prevPage + 1);
@@ -60,11 +59,11 @@ function Home() {
     console.log("fetch more is working")
     try {
       const response = await api.get(
-        "/posts/get-posts?order=desc&page=" + (page) + "&limit=" + limit
+        "/posts/get-posts?order=desc&page=" + (page) + "&limit=" + 5
       );
       const newPosts = response?.data?.data?.posts;
  
-      if (newPosts?.length < limit) {
+      if (newPosts?.length < 5) {
         setHasMore(false);
       } else {
         setPage((prevPage) => prevPage + 1);

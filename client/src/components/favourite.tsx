@@ -29,7 +29,7 @@ function Favourite({postId, favs}: postProp) {
         }
       };
     
-      const { isLoading, error, data  } = useQuery({
+      const { isLoading, data  } = useQuery({
         queryKey: ["single-post",postId],
         queryFn: () => fetchSinglePost(),
       });

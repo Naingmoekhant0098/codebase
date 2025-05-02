@@ -64,7 +64,7 @@ interface postProp {
 function Card({
   _id,
   title,
-  category,
+ 
   cover_image,
   slug,
   short_description,
@@ -90,7 +90,7 @@ function Card({
       );
       return response.data;
     } catch (error: any) {
-      console.log(error.message);
+      console.log(error.message+postId);
     }
   };
   const followMutation = useMutation({

@@ -53,7 +53,7 @@ function Reply({
   likes,
 handleReplyLike,
   createdAt,
-  updatedAt,
+ 
 
 }: commentProp) {
  

@@ -10,7 +10,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
  
 import { token_descrypt } from "@/Services/Decrypt";
 
-function Noti({ userId, status }: { userId: string; status: string }) {
+function Noti({ userId }: { userId: string; status: string }) {
   const [data, setData] = React.useState<any>(null);
   
    const encryptedToken = localStorage.getItem("access_token");

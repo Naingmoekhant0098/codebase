@@ -191,7 +191,7 @@ function Post() {
   // });
 
 
-  const selectedHandler=(selectedOption : any , action:any)=>{
+  const selectedHandler=(selectedOption : any)=>{
     setSelectedOptions(selectedOption)
  const tags = selectedOption.map((item:any) => item.value);
  console.log(tags)

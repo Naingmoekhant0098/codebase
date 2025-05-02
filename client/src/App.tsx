@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { Button } from "./components/ui/button";
-import { useStore } from "./store";
+ 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
@@ -15,7 +14,7 @@ import { Toaster } from "@/components/ui/sonner"
 import Username from "./pages/Username";
  
 function App() {
-  const { count } = useStore((state) => state);
+ 
   const isLogin = localStorage.getItem("access_token");
 
   return (

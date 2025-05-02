@@ -38,9 +38,9 @@ function Comment({
   author_id,
   comment,
   likes,
-  replies,
+   
   createdAt,
-  updatedAt,
+ 
   handleCommentLike
 }: commentProp) {
   const [isOpen, setIsOpen] = useState(false);

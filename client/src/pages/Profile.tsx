@@ -71,7 +71,14 @@ function Profile() {
 
   
  
-  const [updateData, setUpdateData] = useState({});
+  interface UpdateData {
+    name?: string;
+    username?: string;
+    bio?: string;
+    profile?: string;
+  }
+
+  const [updateData, setUpdateData] = useState<UpdateData>({});
   const storage = getStorage(app);
   const handleFileChange = (e: any) => {
     const file = e.target.files;

@@ -37,7 +37,7 @@ function RepliesContainer({commentId }:replyProps) {
 
    
     
-      const { isLoading, error, data } = useQuery({
+      const { isLoading, data } = useQuery({
         queryKey: ["replies", commentId],
         queryFn: () => fetchReply(commentId),
       });

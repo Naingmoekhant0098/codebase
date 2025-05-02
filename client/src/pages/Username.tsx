@@ -105,7 +105,7 @@ function Username() {
       
       }
   };
-  const navigate = useNavigate();
+  
   return (
     <div className=" w-[100vw] h-[100vh] flex items-center justify-center">
       <div className=" max-w-[400px] ">

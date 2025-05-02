@@ -16,7 +16,7 @@ import {
 import { Button } from "./ui/button";
 import { SlLike } from "react-icons/sl";
 import { AiOutlineComment } from "react-icons/ai";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
  
  
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -56,7 +56,7 @@ interface postProp {
   }
 }
 function CardTwo( post:postProp,) {
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   
    const likeFunction = post?.handleLike;
    const bookmarkFunction = post?.handleBookmark;  
@@ -69,88 +69,88 @@ function CardTwo( post:postProp,) {
        return response?.data?.data;
      } catch (error) {}
    };
-   const { isLoading, error, data } = useQuery({
+   const {  data } = useQuery({
      queryKey: ["profileData", username?.replace("@", "")],
      queryFn: () => fetchUserData(username?.replace("@", "")),
    });
 
 
-   const handleFollowUpdate = async (
-    userId: string,
-    followedUserId: string,
-    postId: string
-  ) => {
-    try {
-      const response = await api.put(
-        `/auth/follow-user?userId=${userId}&followedUserId=${followedUserId}`
-      );
-      return response.data;
-    } catch (error: any) {
-      console.log(error.message);
-    }
-  };
-  const followMutation = useMutation({
-    mutationFn: ({
-      userId,
-      followedUserId,
-      postId,
-    }: {
-      userId: string;
-      followedUserId: string;
-      postId: string;
-    }) => handleFollowUpdate(userId, followedUserId, postId),
-    onMutate: async (newTodo) => {
+  //  const handleFollowUpdate = async (
+  //   userId: string,
+  //   followedUserId: string,
+  //   postId: string
+  // ) => {
+  //   try {
+  //     const response = await api.put(
+  //       `/auth/follow-user?userId=${userId}&followedUserId=${followedUserId}`
+  //     );
+  //     return response.data;
+  //   } catch (error: any) {
+  //     console.log(error.message+postId);
+  //   }
+  // };
+  // const followMutation = useMutation({
+  //   mutationFn: ({
+  //     userId,
+  //     followedUserId,
+  //     postId,
+  //   }: {
+  //     userId: string;
+  //     followedUserId: string;
+  //     postId: string;
+  //   }) => handleFollowUpdate(userId, followedUserId, postId),
+  //   onMutate: async (newTodo) => {
      
-      const previousTodos = queryClient.getQueryData(["posts"]);
+  //     const previousTodos = queryClient.getQueryData(["posts"]);
 
-      queryClient.setQueryData(["posts"], (old: any) => {
-        const updatedPosts = old?.posts?.map((post: any) => {
-          if (post._id === newTodo.postId) {
-            const updatedFollowers = post?.author_id?.followers?.includes(
-              userId
-            )
-              ? post?.author_id?.followers?.filter(
-                  (follower: string) => follower !== userId
-                )
-              : [...post?.author_id?.followers, userId];
+  //     queryClient.setQueryData(["posts"], (old: any) => {
+  //       const updatedPosts = old?.posts?.map((post: any) => {
+  //         if (post._id === newTodo.postId) {
+  //           const updatedFollowers = post?.author_id?.followers?.includes(
+  //             userId
+  //           )
+  //             ? post?.author_id?.followers?.filter(
+  //                 (follower: string) => follower !== userId
+  //               )
+  //             : [...post?.author_id?.followers, userId];
 
-            return {
-              ...post,
-              author_id: {
-                ...post.author_id,
-                followers: updatedFollowers,
-              },
-            };
-          }
-          return post;
-        });
-        return {
-          ...old,
-          posts: updatedPosts,
-        };
-      });
+  //           return {
+  //             ...post,
+  //             author_id: {
+  //               ...post.author_id,
+  //               followers: updatedFollowers,
+  //             },
+  //           };
+  //         }
+  //         return post;
+  //       });
+  //       return {
+  //         ...old,
+  //         posts: updatedPosts,
+  //       };
+  //     });
 
-      return { previousTodos };
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-    onSuccess: () => {
-      console.log("Followed successfully");
-      // queryClient.invalidateQueries({ queryKey: ["userData", author_id] });
-    },
-    onSettled: () => {
-      //  queryClient.invalidateQueries({ queryKey: ["userData", author_id] });
-    },
-  });
+  //     return { previousTodos };
+  //   },
+  //   onError: (err) => {
+  //     console.log(err);
+  //   },
+  //   onSuccess: () => {
+  //     console.log("Followed successfully");
+  //     // queryClient.invalidateQueries({ queryKey: ["userData", author_id] });
+  //   },
+  //   onSettled: () => {
+  //     //  queryClient.invalidateQueries({ queryKey: ["userData", author_id] });
+  //   },
+  // });
 
-  const handleFollow = (
-    userId: string,
-    followedUserId: string,
-    postId: string
-  ) => {
-    followMutation.mutate({ userId, followedUserId, postId });
-  };
+  // const handleFollow = (
+  //   userId: string,
+  //   followedUserId: string,
+  //   postId: string
+  // ) => {
+  //   followMutation.mutate({ userId, followedUserId, postId });
+  // };
    
   
   return (

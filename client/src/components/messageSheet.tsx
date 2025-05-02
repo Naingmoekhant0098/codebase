@@ -137,7 +137,7 @@ function messageSheet(userData:any) {
     }
   }
 
-  const { isLoading, error, data } = useQuery({
+  const { data } = useQuery({
     queryKey: ["messages",userId],
     queryFn: () => fetchMessages(),
     

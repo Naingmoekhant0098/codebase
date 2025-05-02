@@ -44,7 +44,7 @@ function navbar() {
     }
   };
 
-  const { isLoading, error, data } = useQuery({
+  const {  data } = useQuery({
     queryKey: ["profileData", userId],
     queryFn: () => fetchUserData(userId),
   });
