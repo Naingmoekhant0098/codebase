@@ -39,6 +39,7 @@ import { Progress } from "@/components/ui/progress";
 import { app } from "@/firebase";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { useStore } from "@/store";
 
 function Profile() {
   console.log("Profile component");
@@ -51,6 +52,8 @@ function Profile() {
   const Fileref = useRef<HTMLInputElement>(null);
   const encryptedToken = localStorage.getItem("access_token");
   const userId = (token_descrypt(encryptedToken) as { id: string })?.id;
+  const favourites = useStore((state) => state.favourites);
+      
   const [tab, setTab] = useState("posts");
   const handleTab =useCallback((tab: string) => {
     setTab(tab);
@@ -267,76 +270,7 @@ function Profile() {
    const handleLike =useCallback((userId: string, postId: string) => {
     
     likeMutation.mutate({ userId, postId });
-  },[]);
-  const handleSaveUpdate = async (userId: string, postId: string) => {
-    try {
-      const response = await api.put(
-        `/posts/save-post?userId=${userId}&postId=${postId}`
-      );
-
-      return response.data;
-    } catch (error: any) {
-      console.log(error.message);
-    }
-  };
-
-   
-    const user_name = (token_descrypt(encryptedToken) as { id: string , username : string })?.username;
-    
-   
-  const bookmarkMutation = useMutation({
-    mutationFn: ({ userId, postId }: { userId: string; postId: string }) =>
-      handleSaveUpdate(userId, postId),
-    onMutate: async (newTodo) => {
-      const previousTodos = queryClient.getQueryData(["profileData", user_name]);
-      
-     
-     if (previousTodos) {
-           queryClient.setQueryData(["profileData", user_name], (old: any) => {
-
-             const isFavUpdate = old.user.favourites.includes(newTodo.postId);
-            
-               const updatedFavourites = isFavUpdate ? old.user.favourites.filter(
-                 (fav: string) => fav !== newTodo.postId
-               ) :
-                [
-                 ...old.user.favourites,
-                 newTodo.postId,
-               ];
-
-              
-               if (isFavUpdate) {
-               
-                toast.success("Post removed from bookmarks");
-               } else {
-                toast.success("Post saved to bookmarks");
-               }
-
-             return {
-               ...old,
-               user : {
-                 ...old.user,
-                 favourites: updatedFavourites,
-               }
-             };
-           });
-         }
-   
-         return { previousTodos };
-
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-    onSuccess: () => {
-      console.log("Saved successfully");
-    },
-  });
-  const handleBookmark =useCallback((userId: string, postId: string) => {
-    bookmarkMutation.mutate({ userId, postId });
-    console.log('what happen')
-  },[]);
-   
+  },[]); 
   if (error) return "An error has occurred: " + error.message;
   
   return (
@@ -557,7 +491,7 @@ function Profile() {
               <div className=" mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                 {data?.posts?.length > 0 ? (
                   data?.posts?.map((post: any, index: number) => (
-                  <CardTwo key={index} {...post} handleLike={handleLike} handleBookmark={handleBookmark} favs={data?.user?.favourites} />
+                  <CardTwo key={index} {...post} handleLike={handleLike}  favs={data?.user?.favourites} />
                   ))
                 ) : (
                   <p>This user has not posted yet!☹︎</p>
@@ -571,9 +505,9 @@ function Profile() {
             ) : (
               <div>
               <div className=" mt-6 grid grid-cols-1 md:grid-cols-2 gap-6"> 
-                {data?.user?.favourites?.length > 0 ? (
-                 data?.user?.favourites?.map((post: any, index: number) => (
-                    <Favourite key={index} postId={post} favs={data?.user?.favourites} />
+                {favourites?.length > 0 ? (
+                  favourites?.map((post: any, index: number) => (
+                    <Favourite key={index} postId={post}  />
                   ))
                 ) : (
                   <p>This user has no favourites yet!☹︎</p>

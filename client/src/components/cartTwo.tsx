@@ -16,7 +16,6 @@ import {
 import { Button } from "./ui/button";
 import { SlLike } from "react-icons/sl";
 import { AiOutlineComment } from "react-icons/ai";
-import { useQuery } from "@tanstack/react-query";
  
  
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -24,8 +23,9 @@ import { token_descrypt } from "@/Services/Decrypt";
 import { IoMdBookmark } from "react-icons/io";
 import { CiBookmark } from "react-icons/ci";
 import moment from "moment";
-import api from "@/api/axios";
+ 
 import { Link } from "react-router-dom";
+import { useStore } from "@/store";
  
 const encryptedToken = localStorage.getItem("access_token");
 const userId = (token_descrypt(encryptedToken) as { id: string })?.id;
@@ -52,108 +52,20 @@ interface postProp {
       favourites?:string[];
       createdAt: Date;
       handleLike: (userId: string, postId: string) => void;
-      handleBookmark : (userId: string, postId: string) => void;
+      
       favs?: string[];
   }
 }
 function CardTwo( post:postProp,) {
   // const queryClient = useQueryClient();
-  
+    
+   const favourites = useStore((state) => state.favourites);
+     const addToFavourites = useStore((state) => state.addToFavourite);
    const likeFunction = post?.handleLike;
-   const bookmarkFunction = post?.handleBookmark;  
-   const username = (token_descrypt(encryptedToken) as { id: string ,username:string})?.username;
-   const fetchUserData = async (username: string | undefined) => {
-     try {
-       const response = await api.get(
-         "/auth/get-user?username=" + username?.replace("@", "")
-       );
-       return response?.data?.data;
-     } catch (error) {}
-   };
-   const {  data } = useQuery({
-     queryKey: ["profileData", username?.replace("@", "")],
-     queryFn: () => fetchUserData(username?.replace("@", "")),
-   });
-
-
-  //  const handleFollowUpdate = async (
-  //   userId: string,
-  //   followedUserId: string,
-  //   postId: string
-  // ) => {
-  //   try {
-  //     const response = await api.put(
-  //       `/auth/follow-user?userId=${userId}&followedUserId=${followedUserId}`
-  //     );
-  //     return response.data;
-  //   } catch (error: any) {
-  //     console.log(error.message+postId);
-  //   }
-  // };
-  // const followMutation = useMutation({
-  //   mutationFn: ({
-  //     userId,
-  //     followedUserId,
-  //     postId,
-  //   }: {
-  //     userId: string;
-  //     followedUserId: string;
-  //     postId: string;
-  //   }) => handleFollowUpdate(userId, followedUserId, postId),
-  //   onMutate: async (newTodo) => {
-     
-  //     const previousTodos = queryClient.getQueryData(["posts"]);
-
-  //     queryClient.setQueryData(["posts"], (old: any) => {
-  //       const updatedPosts = old?.posts?.map((post: any) => {
-  //         if (post._id === newTodo.postId) {
-  //           const updatedFollowers = post?.author_id?.followers?.includes(
-  //             userId
-  //           )
-  //             ? post?.author_id?.followers?.filter(
-  //                 (follower: string) => follower !== userId
-  //               )
-  //             : [...post?.author_id?.followers, userId];
-
-  //           return {
-  //             ...post,
-  //             author_id: {
-  //               ...post.author_id,
-  //               followers: updatedFollowers,
-  //             },
-  //           };
-  //         }
-  //         return post;
-  //       });
-  //       return {
-  //         ...old,
-  //         posts: updatedPosts,
-  //       };
-  //     });
-
-  //     return { previousTodos };
-  //   },
-  //   onError: (err) => {
-  //     console.log(err);
-  //   },
-  //   onSuccess: () => {
-  //     console.log("Followed successfully");
-  //     // queryClient.invalidateQueries({ queryKey: ["userData", author_id] });
-  //   },
-  //   onSettled: () => {
-  //     //  queryClient.invalidateQueries({ queryKey: ["userData", author_id] });
-  //   },
-  // });
-
-  // const handleFollow = (
-  //   userId: string,
-  //   followedUserId: string,
-  //   postId: string
-  // ) => {
-  //   followMutation.mutate({ userId, followedUserId, postId });
-  // };
    
-  
+   
+    
+ 
   return (
     <div className=" ">
         <Link to={"/detail/" + post?.slug}>
@@ -213,19 +125,7 @@ function CardTwo( post:postProp,) {
                         
                       </div>
                     </div>
-                   {/* {post?.author_id._id !== userId && (
-                                               <Button
-                                                 className=" text-[12px] rounded-full"
-                                                 size={"sm"}
-                                                 onClick={() =>
-                                                   handleFollow(userId, post?.author_id._id, post?._id)
-                                                 }
-                                               >
-                                                 {!post?.author_id?.followers?.includes(userId)
-                                                   ? "Follow"
-                                                   : "Unfollow"}
-                                               </Button>
-                                             )} */}
+                  
                   </div>
 
                   </div>
@@ -275,17 +175,17 @@ function CardTwo( post:postProp,) {
         </div>
         <div className=" flex items-center gap-5">
            <div className=" flex ">
-                         {data?.user?.favourites?.includes(post?._id) ? (
+                         {favourites.includes(post?._id) ? (
                            <IoMdBookmark
                              size={23}
                              className=" mt-[2px] cursor-pointer"
-                             onClick={() => bookmarkFunction(userId, post?._id)}
+                             onClick={() => addToFavourites({ id: post?._id })}
                            />
                          ) : (
                            <CiBookmark
                              size={23}
                              className=" mt-[2px] cursor-pointer"
-                             onClick={() => bookmarkFunction(userId, post?._id)}
+                             onClick={() => addToFavourites({ id: post?._id })}
                            />
                          )}
                        </div>

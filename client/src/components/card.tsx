@@ -29,6 +29,7 @@ import { CiBookmark } from "react-icons/ci";
 import { IoMdBookmark } from "react-icons/io";
 import { toast } from "sonner";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useStore } from "@/store";
 const encryptedToken = localStorage.getItem("access_token");
 
 const userId = (token_descrypt(encryptedToken) as { id: string })?.id;
@@ -73,12 +74,10 @@ function Card({
   createdAt,
 }: postProp) {
   const queryClient = useQueryClient();
-  const username = (
-    token_descrypt(encryptedToken) as { id: string; username: string }
-  )?.username;
- 
-  const data = queryClient.getQueryData<{ user: { favourites: string[] } }>(["profileData", username]);
- 
+  
+  
+ const favourites = useStore((state) => state.favourites);
+   const addToFavourites = useStore((state) => state.addToFavourite);
   const handleFollowUpdate = async (
     userId: string,
     followedUserId: string,
@@ -147,114 +146,6 @@ function Card({
       //  queryClient.invalidateQueries({ queryKey: ["userData", author_id] });
     },
   });
-  const handleSaveUpdate = async (userId: string, postId: string) => {
-    try {
-      const response = await api.put(
-        `/posts/save-post?userId=${userId}&postId=${postId}`
-      );
-
-      return response.data;
-    } catch (error: any) {
-      console.log(error.message);
-    }
-  };
-  // const bookmarkMutation = useMutation({
-  //   mutationFn: ({ userId, postId }: { userId: string; postId: string }) =>
-  //     handleSaveUpdate(userId, postId),
-  //   onMutate: async (newTodo) => {
-  //     const previousTodos = queryClient.getQueryData(["posts"]);
-
-  //     if (previousTodos) {
-  //       queryClient.setQueryData(["posts"], (old: any) => {
-  //         const updatedPosts = old?.posts?.map((post: any) => {
-  //           if (post._id === newTodo.postId) {
-  //             const updatedFollowers = post?.author_id?.favourites?.includes(
-  //               newTodo.postId
-  //             )
-  //               ? post?.author_id?.favourites?.filter(
-  //                   (pt: string) => pt !== newTodo.postId
-  //                 )
-  //               : [...post?.author_id?.favourites, newTodo.postId];
-  //             const isSavedd = post?.author_id?.favourites?.includes(
-  //               newTodo.postId
-  //             );
-  //             if (isSavedd) {
-  //               toast.success("Post removed from bookmarks");
-  //             } else {
-  //               toast.success("Post saved to bookmarks");
-  //             }
-  //             return {
-  //               ...post,
-  //               author_id: {
-  //                 ...post.author_id,
-  //                 favourites: updatedFollowers,
-  //               },
-  //             };
-  //           }
-
-  //           return post;
-  //         });
-  //         return {
-  //           ...old,
-  //           posts: updatedPosts,
-  //         };
-  //       });
-  //     }
-
-  //     return { previousTodos };
-  //   },
-  //   onError: (err) => {
-  //     console.log(err);
-  //   },
-  //   onSuccess: () => {
-  //     console.log("Saved successfully");
-  //   },
-  // });
-  const bookmarkMutation = useMutation({
-    mutationFn: ({ userId, postId }: { userId: string; postId: string }) =>
-      handleSaveUpdate(userId, postId),
-    onMutate: async (newTodo) => {
-      const previousTodos = queryClient.getQueryData(["profileData", username]);
- 
-      if (previousTodos) {
-        queryClient.setQueryData(["profileData", username], (old: any) => {
-          const isFavUpdate = old.user.favourites.includes(newTodo.postId);
-
-          const updatedFavourites = isFavUpdate
-            ? old.user.favourites.filter((fav: string) => fav !== newTodo.postId)
-            : [...old.user.favourites, newTodo.postId];
-
-          if (isFavUpdate) {
-            toast.success("Post removed from bookmarks");
-          } else {
-            toast.success("Post saved to bookmarks");
-          }
-
-          return {
-            ...old,
-
-            user: {
-              ...old.user,
-              favourites: updatedFavourites,
-            },
-          };
-        });
-      }
-
-      return { previousTodos };
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-    onSuccess: () => {
-      console.log("Saved successfully");
-    },
-  });
-
-  const handleBookmark = async (userId: string, postId: string) => {
-    bookmarkMutation.mutate({ userId, postId });
-  };
-
   const handleFollow = (
     userId: string,
     followedUserId: string,
@@ -473,17 +364,17 @@ function Card({
             </div>
             <div className=" flex items-center gap-3">
               <div className=" flex ">
-                {data?.user?.favourites?.includes(_id) ? (
+                {favourites?.includes(_id) ? (
                   <IoMdBookmark
                     size={23}
                     className=" mt-[2px] cursor-pointer"
-                    onClick={() => handleBookmark(userId, _id)}
+                    onClick={() => addToFavourites({ id: _id })}
                   />
                 ) : (
                   <CiBookmark
                     size={23}
                     className=" mt-[2px] cursor-pointer"
-                    onClick={() => handleBookmark(userId, _id)}
+                    onClick={() => addToFavourites({ id: _id })}
                   />
                 )}
               </div>

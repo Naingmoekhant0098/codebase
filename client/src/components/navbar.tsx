@@ -17,15 +17,17 @@ import { token_descrypt } from "@/Services/Decrypt";
 import api from "@/api/axios";
 import { useQuery } from "@tanstack/react-query";
 import Noti from "./noti";
+import { useStore } from "@/store";
 
 
 function navbar() {
   const encryptedToken=localStorage.getItem("access_token");
   const userId = (token_descrypt(encryptedToken) as { id: string })?.id;
-  
+   const clearCart = useStore((state) => state.clearCart);
   
   const navigate = useNavigate();
   const handleLogOut=()=>{
+    clearCart();
     localStorage.removeItem('access_token');
       navigate('/login');
   }

@@ -27,6 +27,9 @@ import { token_descrypt } from "@/Services/Decrypt";
  
 import Comment from "@/components/comment";
 import { toast } from "sonner";
+import { useStore } from "@/store";
+import { IoMdBookmark } from "react-icons/io";
+import { CiBookmark } from "react-icons/ci";
 const encryptedToken = localStorage.getItem("access_token");
 const username = (
   token_descrypt(encryptedToken) as { id: string; username: string }
@@ -34,7 +37,8 @@ const username = (
 function Detail() {
   const [comment, setComment] = useState("");
   const [isCommentLoading, setCommentLoading] = useState(false);
-
+ const favourites = useStore((state) => state.favourites);
+     const addToFavourites = useStore((state) => state.addToFavourite);
   const { slug } = useParams();
   
   const fetchPosts = async () => {
@@ -87,6 +91,8 @@ function Detail() {
     queryKey: ["recommend"],
     queryFn: () => fetchRecommendPosts(),
   });
+
+  
   
   const queryClient = useQueryClient();
   const encryptedToken = localStorage.getItem("access_token");
@@ -313,94 +319,11 @@ function Detail() {
     commentLikeMutation.mutate(commentId);
   };
 
-  //  const handleCommentLike=async(commentId:string)=>{
-  //   try {
-
-      
-  //   } catch (error) {
-      
-  //   }
-  
-  //   queryClient.setQueryData(["post", slug], (old: any) => {
-    
-  //     const updatedPosts = old?.comments.map((comment: any) => {
-  //       if (comment._id === commentId) {
-  //         const updatedLikes = comment.likes?.includes(userId)
-  //           ? comment.likes?.filter((pt: string) => pt !== userId)
-  //           : [...comment.likes, userId];
-  //         return {
-  //           ...comment,
-  //           likes: updatedLikes,
-  //         };
-  //       }
-  //       return comment;
-  //     });
-  //     return {
-  //       ...old,
-  //       comments: updatedPosts,
-  //     };
-  //   });
-  
-    
-  //   }
-
-  const handleSaveUpdate = async (userId: string, postId: string) => {
-    try {
-      const response = await api.put(
-        `/posts/save-post?userId=${userId}&postId=${postId}`
-      );
-
-      return response.data;
-    } catch (error: any) {
-      console.log(error.message);
-    }
-  };
-
-  const bookmarkMutation = useMutation({
-    mutationFn: ({ userId, postId }: { userId: string; postId: string }) =>
-      handleSaveUpdate(userId, postId),
-    onMutate: async (newTodo) => {
-      const previousTodos = queryClient.getQueryData(["profileData", username]);
  
-      if (previousTodos) {
-        queryClient.setQueryData(["profileData", username], (old: any) => {
-          const isFavUpdate = old.user.favourites.includes(newTodo.postId);
+  
 
-          const updatedFavourites = isFavUpdate
-            ? old.user.favourites.filter((fav: string) => fav !== newTodo.postId)
-            : [...old.user.favourites, newTodo.postId];
-
-          if (isFavUpdate) {
-            toast.success("Post removed from bookmarks");
-          } else {
-            toast.success("Post saved to bookmarks");
-          }
-
-          return {
-            ...old,
-
-            user: {
-              ...old.user,
-              favourites: updatedFavourites,
-            },
-          };
-        });
-      }
-
-      return { previousTodos };
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-    onSuccess: () => {
-      console.log("Saved successfully");
-    },
-  });
-
-  const handleBookmark = async (userId: string, postId: string) => {
-    bookmarkMutation.mutate({ userId, postId });
-  };
-
+  
+  
   return (
     <div className=" max-w-3xl  mx-auto mt-6 md:px-0 px-5 mt-20">
       {isLoading ? (
@@ -523,23 +446,21 @@ function Detail() {
             </div>
             <div className=" flex items-center gap-5">
               <div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  className="bk cursor-pointer"
-                >
-                  <path
-                    fill="#000"
-                    d="M17.5 1.25a.5.5 0 0 1 1 0v2.5H21a.5.5 0 0 1 0 1h-2.5v2.5a.5.5 0 0 1-1 0v-2.5H15a.5.5 0 0 1 0-1h2.5zm-11 4.5a1 1 0 0 1 1-1H11a.5.5 0 0 0 0-1H7.5a2 2 0 0 0-2 2v14a.5.5 0 0 0 .8.4l5.7-4.4 5.7 4.4a.5.5 0 0 0 .8-.4v-8.5a.5.5 0 0 0-1 0v7.48l-5.2-4a.5.5 0 0 0-.6 0l-5.2 4z"
-                  ></path>
-                </svg>
+                 {favourites.includes(data?._id) ? (
+                                            <IoMdBookmark
+                                              size={23}
+                                              className=" mt-[2px] cursor-pointer"
+                                              onClick={() => addToFavourites({ id: data?._id })}
+                                            />
+                                          ) : (
+                                            <CiBookmark
+                                              size={23}
+                                              className=" mt-[2px] cursor-pointer"
+                                              onClick={() => addToFavourites({ id: data?._id })}
+                                            />
+                                          )}
               </div>
-              {/* <div>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="aqd"><path fill="#000" d="M7.5 3.75a2 2 0 0 0-2 2v14a.5.5 0 0 0 .8.4l5.7-4.4 5.7 4.4a.5.5 0 0 0 .8-.4v-14a2 2 0 0 0-2-2z"></path></svg>
-        </div> */}
+             
               <IoShareOutline className=" text-[24px] opacity-70 cursor-pointer" />
               <Popover>
                 <PopoverTrigger className=" mb-0">
@@ -556,7 +477,7 @@ function Detail() {
           <div className=" mt-8 flex flex-col gap-5">
             <img
               src={data?.cover_image}
-              className=" w-full h-sm-[200px] h-md-[200px] h-lg-[400px] object-cover"
+              className=" w-full h-[400px] h-sm-[100px] h-md-[100px]  object-cover rounded-md "
               alt=""
             />
             <div
@@ -637,7 +558,7 @@ function Detail() {
                     key={index}
                     {...post}
                     handleLike={handleLike}
-                    handleBookmark={handleBookmark}
+                    
                     favs={data?.user?.favourites}
                   />
                 ))}
@@ -658,7 +579,7 @@ function Detail() {
                     key={index}
                     {...post}
                     handleLike={handleLikeSimilar}
-                    handleBookmark={handleBookmark}
+                   
                     favs={data?.user?.favourites}
                   />
                 ))}

@@ -5,8 +5,13 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Skeleton } from '@/components/ui/skeleton';
 import { token_descrypt } from '@/Services/Decrypt';
 import InfiniteScroll from 'react-infinite-scroll-component';
-function Home() {
+import { useStore } from '@/store';
+ 
 
+function Home() {
+  
+  const addToFavourites = useStore((state) => state.addToFavourite);
+ 
   const [hasMore,setHasMore] = useState(true)
   const[page,setPage] = useState(1)
   
@@ -101,11 +106,11 @@ function Home() {
             <div className="flex w-full justify-between gap-2 mt-1">
               <div className="">
                 <div className=" text-xl mt-2 w-full font-semibold line-clamp-2">
-                  <Skeleton className="h-3" />
+                  <Skeleton className="h-3 w-[200px]" />
                 </div>
                 <div className=" mt-2 space-y-1 text-gray-500 text-[14px] line-clamp-2 font-[400]">
-                  <Skeleton className="h-2 w-md-[150px] w-lg-[400px]" />
-                  <Skeleton className="h-2 w-md-[150px] w-lg-[400px]" />
+                  <Skeleton className="h-2  w-[400px] w-md-[120px] " />
+                  <Skeleton className="h-2 w-[400px]  w-md-[120px]" />
                 </div>
               </div>
             </div>
@@ -151,11 +156,13 @@ function Home() {
         })
       }
 
+      
+
 
 
 </InfiniteScroll>
 
-    
+    <button onClick={()=>addToFavourites({id : 1})}>add me</button>
      
        
     </div>
