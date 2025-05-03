@@ -104,8 +104,8 @@ function Home() {
                   <Skeleton className="h-3" />
                 </div>
                 <div className=" mt-2 space-y-1 text-gray-500 text-[14px] line-clamp-2 font-[400]">
-                  <Skeleton className="h-2 w-[400px]" />
-                  <Skeleton className="h-2 w-[400px]" />
+                  <Skeleton className="h-2 w-md-[150px] w-lg-[400px]" />
+                  <Skeleton className="h-2 w-md-[150px] w-lg-[400px]" />
                 </div>
               </div>
             </div>
@@ -133,8 +133,8 @@ function Home() {
                 <Skeleton className="h-3" />
               </div>
               <div className=" mt-2 space-y-1 text-gray-500 text-[14px] line-clamp-2 font-[400]">
-                <Skeleton className="h-2 w-[400px]" />
-                <Skeleton className="h-2 w-[400px]" />
+                <Skeleton className="h-2 w-md-[150px] w-lg-[400px]" />
+                <Skeleton className="h-2 w-md-[150px] w-lg-[400px]" />
               </div>
             </div>
           </div>

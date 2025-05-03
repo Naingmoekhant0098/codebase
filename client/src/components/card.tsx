@@ -429,7 +429,9 @@ function Card({
                       <p className="text-sm mt-2">{author_id?.bio}</p>
                       <div className="flex items-center pt-2">
                         <span className="text-xs text-muted-foreground">
-                          Joined December 2021
+                          {
+                                           moment(author_id?.createdAt).format('LL')
+                                           }
                         </span>
                       </div>
                     </div>

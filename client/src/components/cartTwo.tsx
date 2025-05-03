@@ -234,7 +234,9 @@ function CardTwo( post:postProp,) {
                   </p>
                   <div className="flex items-center pt-2">
                     <span className="text-xs text-muted-foreground">
-                      Joined December 2021
+                    {
+                  moment(post?.author_id?.createdAt).format('LL')
+                  }
                     </span>
                   </div>
                 </div>
