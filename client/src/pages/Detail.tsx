@@ -475,14 +475,17 @@ function Detail() {
                     </div>
                   </HoverCardContent>
                 </HoverCard>
-                <div
-                  className=" text-green-600 text-sm cursor-pointer"
-                  onClick={() => handleFollow(userId, data?.author_id._id)}
-                >
-                  {!data?.author_id?.followers?.includes(userId)
-                    ? "Follow"
-                    : "Following"}
-                </div>
+               {
+                data?.author_id?._id!== userId && (
+                 <div
+                 className=" text-green-600 text-sm cursor-pointer"
+                 onClick={() => handleFollow(userId, data?.author_id._id)}
+               >
+                 {!data?.author_id?.followers?.includes(userId)
+                   ? "Follow"
+                   : "Following"}
+               </div>)
+               }
               </div>
               <div className="-mt-1 flex items-center gap-1 font-[300] text-gray-500 text-[12px] md:text-[13px]">
                 <div className="">
@@ -553,7 +556,7 @@ function Detail() {
           <div className=" mt-8 flex flex-col gap-5">
             <img
               src={data?.cover_image}
-              className=" w-full h-[400px] object-cover"
+              className=" w-full h-sm-[200px] h-md-[200px] h-lg-[400px] object-cover"
               alt=""
             />
             <div
@@ -624,7 +627,7 @@ function Detail() {
             </div>
           </div>
 
-          {similarData.posts?.length > 0 && (
+          {similarData?.posts?.length > 0 && (
             <div className="pb-10">
               <div className=" text-2xl font-[500]">Similar Posts</div>
 

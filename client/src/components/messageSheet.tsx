@@ -71,7 +71,7 @@ function messageSheet(userData:any) {
   
  
 
- const isActive = onlineUsers.find((user:any) => user.userId === userData.userData?.user._id);
+ const isActive = onlineUsers.find((user:any) => user.userId === userData.userData?.user?._id);
   socket.on("receiveMessage", (data) => {
   if(data){
     toast.success("New message received from user");
@@ -92,7 +92,7 @@ function messageSheet(userData:any) {
         "/auth/send-message",
         {
           senderId: userId,
-          receiverId: userData.userData.user._id,
+          receiverId: userData?.userData?.user?._id,
           message: message,
         }
       ); 
@@ -127,7 +127,7 @@ function messageSheet(userData:any) {
   const fetchMessages = async()=>{
     try {
       const response = await api.get(
-        "/auth/get-messages?senderId=" +userId+"&receiverId="+userData.userData?.user?._id
+        "/auth/get-messages?senderId=" +userId+"&receiverId="+userData?.userData?.user?._id
       );
      
       return response?.data;

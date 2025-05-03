@@ -139,6 +139,7 @@ function Profile() {
     onSuccess: () => {
       console.log(updateData)
       queryClient.invalidateQueries({ queryKey: ["profileData", username?.replace("@", "")] });
+      queryClient.invalidateQueries({ queryKey: ["profileData",data?.user?._id] });
       toast("Profile Updated", {
         position: "top-center",
         action: {
@@ -231,7 +232,7 @@ function Profile() {
       handleLikeUpdate(userId, postId),
     onMutate: async (newTodo) => {
       const previousTodos = queryClient.getQueryData(["profileData", username?.replace("@", "")]);
-     console.log(previousTodos)
+     
       if (previousTodos) {
         queryClient.setQueryData(["profileData", username?.replace("@", "")], (old: any) => {
           const updatedLikes = old?.posts?.map((post: any) => {
@@ -292,36 +293,6 @@ function Profile() {
      
      if (previousTodos) {
            queryClient.setQueryData(["profileData", user_name], (old: any) => {
-
-            
-            //  const updatedPosts = old?.posts?.map((post: any) => {
-            //    if (post._id === newTodo.postId) {
-            //      const updatedFollowers = post?.author_id?.favourites?.includes(
-            //        newTodo.postId
-            //      )
-            //        ? post?.author_id?.favourites?.filter(
-            //            (pt: string) => pt !== newTodo.postId
-            //          )
-            //        : [...post?.author_id?.favourites, newTodo.postId];
-            //      const isSavedd = post?.author_id?.favourites?.includes(
-            //        newTodo.postId
-            //      );
-            //      if (isSavedd) {
-            //        toast.success("Post removed from bookmarks");
-            //      } else {
-            //        toast.success("Post saved to bookmarks");
-            //      }
-            //      return {
-            //        ...post,
-            //        author_id: {
-            //          ...post.author_id,
-            //          favourites: updatedFollowers,
-            //        },
-            //      };
-            //    }
-   
-            //    return post;
-            //  });
 
              const isFavUpdate = old.user.favourites.includes(newTodo.postId);
             
@@ -515,7 +486,7 @@ function Profile() {
                             </label>
                             <Textarea
                               placeholder="Bio"
-                              className=" max-w-[200] text-[13px] focus:outline-0 focus:border-0"
+                              className=" min-w-[200] text-[13px] focus:outline-0 focus:border-0"
                               defaultValue={data?.user?.bio}
                               onChange={(e) =>
                                 setUpdateData({

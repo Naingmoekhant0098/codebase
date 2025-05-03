@@ -22,7 +22,7 @@ import Noti from "./noti";
 function navbar() {
   const encryptedToken=localStorage.getItem("access_token");
   const userId = (token_descrypt(encryptedToken) as { id: string })?.id;
-  console.log(token_descrypt(encryptedToken))
+  
   
   const navigate = useNavigate();
   const handleLogOut=()=>{
@@ -99,7 +99,7 @@ function navbar() {
             <DropdownMenu>
                     <DropdownMenuTrigger>
                       {/* <FaUserAstronaut className=" text-2xl pb-0" /> */}
-                      <GoBell className="text-[22px] text-gray-500" />
+                      <GoBell className="text-[20px] mt-1.5 text-gray-500" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className=" mr-6 px-4 py-3">
                       <DropdownMenuLabel>Notification</DropdownMenuLabel>

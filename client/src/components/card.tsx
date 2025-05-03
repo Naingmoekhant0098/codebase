@@ -51,7 +51,7 @@ interface postProp {
   description: string;
 
   favauritedUserLists: [];
-
+  commentsCount:number;
   likes: string[];
 
   short_description: string;
@@ -64,7 +64,7 @@ interface postProp {
 function Card({
   _id,
   title,
- 
+  commentsCount,
   cover_image,
   slug,
   short_description,
@@ -416,7 +416,7 @@ function Card({
                               className=" text-[12px] rounded-full"
                               size={"sm"}
                               onClick={() =>
-                                handleFollow(userId, author_id._id, _id)
+                                handleFollow(userId, author_id?._id, _id)
                               }
                             >
                               {!author_id?.followers?.includes(userId)
@@ -466,7 +466,7 @@ function Card({
               </div>
               <div className="flex gap-2 items-center opacity-70 cursor-pointer">
                 <AiOutlineComment className=" text-[20px]" />
-                <div className=" text-[14px]">1.2k</div>
+                <div className=" text-[14px]">{commentsCount}</div>
               </div>
             </div>
             <div className=" flex items-center gap-3">
@@ -492,7 +492,19 @@ function Card({
                   <HiOutlineDotsCircleHorizontal className=" text-[22px] opacity-70 cursor-pointer" />
                 </PopoverTrigger>
                 <PopoverContent className=" text-[13px] max-w-[200px] gap-3 flex flex-col cursor-pointer">
-                  <div>Follow Author</div>
+                {author_id._id !== userId && (
+                            <div
+                              
+                              onClick={() =>
+                                handleFollow(userId, author_id?._id, _id)
+                              }
+                            >
+                              {!author_id?.followers?.includes(userId)
+                                ? "Follow Author"
+                                : "Unfollow Author"}
+                            </div>
+                          )}
+               
                   <div>Mute Author</div>
                   <Separator className="my-2" />
                   <div className=" text-red-400">Report Post..</div>
@@ -516,10 +528,12 @@ function Card({
             <LazyLoadImage
               alt={"Not found"}
               effect="blur"
-              height={110}
+            
               src={cover_image}
+            className=" w-[200px] h-[110px] object-cover rounded-sm"
               width={200}
               wrapperProps={{
+                
                 // If you need to, you can tweak the effect transition using the wrapper style.
                 style: { transitionDelay: "1s" },
               }}

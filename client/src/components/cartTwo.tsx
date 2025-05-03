@@ -35,6 +35,7 @@ interface postProp {
     handleBookmark: any;
     handleLike: any;
     _id: string;
+    commentsCount: number;
     title: string;
     description: string;
     slug: string;
@@ -267,7 +268,7 @@ function CardTwo( post:postProp,) {
           </div>
           <div className="flex gap-2 items-center opacity-70 cursor-pointer">
             <AiOutlineComment className=" text-[20px]" />
-            <div className=" text-[14px]">1.2k</div>
+            <div className=" text-[14px]">{post?.commentsCount}</div>
           </div>
         </div>
         <div className=" flex items-center gap-5">

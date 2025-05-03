@@ -87,7 +87,7 @@ function Post() {
       const response = await api.get("category/get-category");
       if (response.status !== 200) {
         toast("Error fetching categories", {
-          description: response.data.message,
+          description: response?.data?.message,
           position: "top-center",
           action: {
             label: "Close",
@@ -115,7 +115,7 @@ function Post() {
       });
       if (response.status !== 200) {
         toast("Error creating category", {
-          description: response.data.message,
+          description: response?.data?.message,
           position: "top-center",
           action: {
             label: "Close",
@@ -127,7 +127,7 @@ function Post() {
       }
       setCategories([
         ...categories,
-        response.data.data.category,
+        response?.data?.data?.category,
       ]);
       setIsPending(false);
       setIsDialogOpen(false);
@@ -193,7 +193,7 @@ function Post() {
 
   const selectedHandler=(selectedOption : any)=>{
     setSelectedOptions(selectedOption)
- const tags = selectedOption.map((item:any) => item.value);
+ const tags = selectedOption?.map((item:any) => item.value);
  console.log(tags)
  setSelectedTags(tags);
   }
@@ -229,7 +229,7 @@ function Post() {
           const progress = Math.round(
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           );
-          console.log(progress);
+           
           setProgress(progress);
           // setUploadFileProgress(progress.toFixed(0))
         },
@@ -247,6 +247,7 @@ function Post() {
       );
     }
   };
+
   const encryptedToken = localStorage.getItem("access_token");
   const userId = (token_descrypt(encryptedToken) as { id: string })?.id;
   const handlePost = async () => {
@@ -259,7 +260,7 @@ function Post() {
       author_id: userId,
       tags : selectedTags
     };
-    if (!title ||!short_des ||!content || !downloadImage || !selectedOption.value || selectedTags.length === 0) {
+    if (!title ||!short_des ||!content || !downloadImage || !selectedOption?.value || selectedTags?.length === 0) {
       toast("Post Create Error!", {
         description: "Please Fill All Required Fields!",
         position: "top-center",
@@ -334,7 +335,7 @@ function Post() {
         />
         <Select
           onChange={handleChangeCategory}
-          className="  text-sm"
+          className="text-sm"
           value={selectedOption}
           options={categories&&categories
             ?.map((item: any) => ({
@@ -371,7 +372,7 @@ function Post() {
               <img
                 src={downloadImage}
                 alt=""
-                className=" mt-4 w-full h-[20] rounded-sm object-cover"
+                className=" mt-4 w-full h-[200px] rounded-sm object-cover"
               />
             </div>
           </div>
@@ -448,6 +449,7 @@ value={selectedOptions}
     options={tags}
     className="basic-multi-select font-[12px]"
     classNamePrefix="select"
+    placeholder="Select Tags"
     onChange={selectedHandler}
   />
 
@@ -468,7 +470,7 @@ value={selectedOptions}
             size={"lg"}
             onClick={handlePost}
             disabled={
-              !downloadImage || !title || !selectedOption.value || !content || !short_des
+              !downloadImage || !title || !(selectedOption?.value) || !content || !short_des
             }
           >
             {isLoading && <Loader2 className="animate-spin" />}

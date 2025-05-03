@@ -84,7 +84,7 @@ function Login() {
   };
   return (
     <div className=" w-[100vw] h-[100vh] flex items-center justify-center">
-      <div className=" max-w-[400px] ">
+      <div className=" w-sm-[300px] w-md-[300px] w-lg-[400px] ">
         <div className=" font-semibold text-3xl text-center">
           Welcome To Code Base
         </div>
