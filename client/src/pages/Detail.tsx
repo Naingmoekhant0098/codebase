@@ -26,14 +26,12 @@ import moment from "moment";
 import { token_descrypt } from "@/Services/Decrypt";
  
 import Comment from "@/components/comment";
-import { toast } from "sonner";
+ 
 import { useStore } from "@/store";
 import { IoMdBookmark } from "react-icons/io";
 import { CiBookmark } from "react-icons/ci";
 const encryptedToken = localStorage.getItem("access_token");
-const username = (
-  token_descrypt(encryptedToken) as { id: string; username: string }
-)?.username;
+
 function Detail() {
   const [comment, setComment] = useState("");
   const [isCommentLoading, setCommentLoading] = useState(false);
