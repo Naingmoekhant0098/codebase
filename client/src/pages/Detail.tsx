@@ -159,7 +159,7 @@ function Detail() {
         return {
           ...old,
           commentsCount: old.commentsCount + 1,
-          comments: [...old.comments, ...response.data.comments],
+          comments: response.data.comments,
         };
       });
       setComment("");
@@ -511,9 +511,9 @@ function Detail() {
           <div className="">
             <div className=" w-full flex items-center justify-between">
               <div className=" text-xl font-[450]">Response ({data?.commentsCount})</div>
-              <div className="border p-2 px-4 rounded-md text-[14px]">
+              {/* <div className="border p-2 px-4 rounded-md text-[14px]">
                 SignUp
-              </div>
+              </div> */}
             </div>
 
             <div className=" my-4  border-b pb-6">
