@@ -30,8 +30,7 @@ import Comment from "@/components/comment";
 import { useStore } from "@/store";
 import { IoMdBookmark } from "react-icons/io";
 import { CiBookmark } from "react-icons/ci";
-const encryptedToken = localStorage.getItem("access_token");
-
+ 
 function Detail() {
   const [comment, setComment] = useState("");
   const [isCommentLoading, setCommentLoading] = useState(false);
