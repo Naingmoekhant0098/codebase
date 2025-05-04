@@ -125,7 +125,7 @@ body{
 }
 .showNav{
   background-color: rgba(241, 225, 225, 0.041);
-  backdrop-filter: blur(5px);  
+  backdrop-filter: blur(10px);  
 }
 
 .hideNav{
@@ -133,7 +133,7 @@ body{
 }
 .topNav{
   background-color: rgba(241, 225, 225, 0.041);
-  backdrop-filter: blur(5px);   
+  backdrop-filter: blur(10px);   
 }
 
 

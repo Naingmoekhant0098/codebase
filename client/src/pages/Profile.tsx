@@ -274,7 +274,7 @@ function Profile() {
   if (error) return "An error has occurred: " + error.message;
   
   return (
-    <div className=" max-w-3xl md:px-0 px-5  mx-auto pb-10 mt-20">
+    <div className=" max-w-3xl md:px-0 px-5  mx-auto pb-10 mt-24">
       {isLoading ? (
         <div className=" mt-10 flex flex-col  space-y-3 items-center">
           <div className="gap-2 items-center mx-auto flex flex-col">
@@ -295,7 +295,7 @@ function Profile() {
           <LazyLoadImage
             alt={"not found"}
             effect="blur"
-            className="rounded-full w-22 md:w-24  h-22 md:h-24 object-cover"
+            className="rounded-full w-20 md:w-24  h-20 md:h-24 object-cover"
             src={data?.user?.profile}
           />
 

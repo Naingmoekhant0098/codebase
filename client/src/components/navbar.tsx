@@ -76,11 +76,12 @@ function navbar() {
  
  
   return (
-    <div className={`flex justify-between fixed w-full items-center p-5 py-4  top-0 transition-all duration-300 border border-b-1 border-gray-100  ${showNavbar}`}>
+    <div className={`flex justify-between fixed w-full items-center p-5 py-1 lg:py-4  top-0 transition-all duration-300 border border-b-1 border-gray-100  ${showNavbar}`}>
       <div className="flex gap-5 items-center">
         <div className=" font-semibold text-2xl text-center">
           {/* <SiEditorconfig className=' text-[50px] font-semibold' /> */}
-          <Link to={"/"}>CodeBase</Link>
+          <Link to={"/"} className="  hidden  lg:block">CodeBase</Link>
+         <Link to={'/'}><img className="w-16 -ms-2 h-16 block lg:hidden object-cover" src="/logo.png" alt="" /></Link> 
         </div>
         <div className=" hidden">
           <input

@@ -323,7 +323,7 @@ function Post() {
   };
 
   return (
-    <div className=" max-w-3xl md:px-0 px-5   mx-auto pb-20 mt-20">
+    <div className=" max-w-3xl md:px-0 px-5   mx-auto pb-20 mt-24">
       <div className=" text-2xl md:text-3xl font-[500] mt-8 text-center">
         Write CodeBase Post
       </div>

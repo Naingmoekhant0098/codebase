@@ -134,7 +134,7 @@ function Otp() {
        }
   }
   return (
-    <div className=" w-[100vw] h-[100vh] flex items-center justify-center">
+    <div className=" w-[100vw] h-[100vh] flex items-center justify-center px-6">
       <div className=" w-sm-[300px] w-md-[300px] w-[400px] ">
         <div className=" font-semibold text-3xl text-center">Verify Your Account</div>
         <div className="">

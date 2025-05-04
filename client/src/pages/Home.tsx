@@ -5,13 +5,10 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Skeleton } from '@/components/ui/skeleton';
 import { token_descrypt } from '@/Services/Decrypt';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useStore } from '@/store';
  
 
 function Home() {
   
-  const addToFavourites = useStore((state) => state.addToFavourite);
- 
   const [hasMore,setHasMore] = useState(true)
   const[page,setPage] = useState(1)
   
@@ -94,14 +91,14 @@ function Home() {
   return (
 
     
-    <div className=' max-w-3xl mx-auto  mt-20'>
+    <div className=' max-w-3xl mx-auto  mt-24'>
       {
         isLoading && Array.from({ length: 6 }).map((_, index) => {
-          return  <div key={index} className="flex flex-row items-center mt-6">
-          <div className=" w-[75%]">
+          return  <div key={index} className="flex flex-row items-center mt-6 px-3">
+          <div className=" w-[60%] lg:w-[75%]">
             <div className="flex gap-2 items-center">
               <Skeleton className="h-10 w-10 rounded-full" />
-              <Skeleton className="h-2 w-[200px]" />
+              <Skeleton className="h-2 w-[100px] lg:w-[200px]" />
             </div>
             <div className="flex w-full justify-between gap-2 mt-1">
               <div className="">
@@ -109,14 +106,14 @@ function Home() {
                   <Skeleton className="h-3 w-[200px]" />
                 </div>
                 <div className=" mt-2 space-y-1 text-gray-500 text-[14px] line-clamp-2 font-[400]">
-                  <Skeleton className="h-2  w-[400px] w-md-[120px] " />
-                  <Skeleton className="h-2 w-[400px]  w-md-[120px]" />
+                  <Skeleton className="h-2  lg:w-[400px] w-[120px] " />
+                  <Skeleton className="h-2 lg:w-[400px]   w-md-[120px] " />
                 </div>
               </div>
             </div>
           </div>
           <div className="w-[20%]">
-          <Skeleton className="h-[125px] w-[200px] rounded-xl" />
+          <Skeleton className="h-[125px] w-[150px] lg:w-[200px] rounded-xl" />
           </div>
         </div>
         })
@@ -162,7 +159,7 @@ function Home() {
 
 </InfiniteScroll>
 
-    <button onClick={()=>addToFavourites({id : 1})}>add me</button>
+    
      
        
     </div>

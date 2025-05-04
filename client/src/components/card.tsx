@@ -245,7 +245,7 @@ function Card({
   return (
     <>
       <div className=" cursor-pointer gap-1 p-5 pb-8 border-b border-gray-100 flex items-center justify-between">
-        <div className=" w-[75%]">
+        <div className=" w-[70%]   lg:w-[75%]">
           <div className="flex gap-2 items-center">
             <Link to={"/profile/@" + author_id?.username}>
               <img
@@ -416,14 +416,14 @@ function Card({
             </div>
           </div>
         </div>
-        <div className="w-[25%]  ">
+        <div className="w-[30%] lg:w-[25%]    ">
           <Link to={"/detail/" + slug}>
             <LazyLoadImage
               alt={"Not found"}
               effect="blur"
             
               src={cover_image}
-            className=" w-[200px] h-[110px] object-cover rounded-sm"
+            className=" w-[250px] lg:w-[200px] h-[110px] object-cover rounded-sm"
               width={200}
               wrapperProps={{
                 

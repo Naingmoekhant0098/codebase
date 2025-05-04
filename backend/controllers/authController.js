@@ -305,7 +305,7 @@ exports.getUser = async (req, res, next) => {
 };
 exports.requestToAcceptMessages= async (req, res, next) => {
   const { userId, requestUserId } = req.body;
-  console.log(req.body)
+  
   try {
     const isRequestedUserExist = await User.findOne({ _id: requestUserId });
     if (!isRequestedUserExist) {
@@ -347,7 +347,7 @@ exports.requestToAcceptMessages= async (req, res, next) => {
 }
 exports.acceptRequest = async(req,res,next)=>{
   const {userId,status,acceptedBy} = req.query;
-   console.log(req.query)
+    
   if (!userId || !status || !acceptedBy) {
     const err = new Error("UserId, status and acceptedBy is required");
     err.status = 400;
@@ -382,7 +382,7 @@ exports.acceptRequest = async(req,res,next)=>{
 }
 exports.sendMessage = async (req, res, next) => {
   const { senderId, receiverId, message } = req.body;
-  console.log(req.body)
+  
   if (!senderId || !receiverId || !message) {
     const err = new Error("SenderId, receiverId and message is required");
     err.status = 400;

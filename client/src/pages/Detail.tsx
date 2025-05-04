@@ -325,7 +325,7 @@ function Detail() {
   
   
   return (
-    <div className=" max-w-3xl  mx-auto mt-6 md:px-0 px-5 mt-20">
+    <div className=" max-w-3xl  mx-auto  md:px-0 px-5 mt-24">
       {isLoading ? (
         <div>
           <div className="flex flex-col md:px-0 px-5  space-y-6  mt-6">
@@ -365,29 +365,32 @@ function Detail() {
             {data?.title}
           </div>
           <div className="flex gap-3 mt-4 items-center">
+          <Link to={"/profile/@" + data?.author_id?.username}>
             <img
               src={data?.author_id?.profile}
               alt="not found"
-              className="rounded-full  w-12 h-12 object-cover"
+              className="rounded-full  w-10 h-10 object-cover"
             />
-            <div className=" gap-0 text-[12px]">
+            </Link>
+            <div className=" gap-0 text-[12px] -mt-2">
               <div className=" flex items-center gap-2">
                 <HoverCard>
                   <HoverCardTrigger asChild>
+                  <Link to={"/profile/@" + data?.author_id?.username}>
                     <Button
                       variant="link"
                       className=" font-[400] ps-0 text-[14px]"
                     >
                       {data?.author_id?.name}
                     </Button>
+                    </Link>
                   </HoverCardTrigger>
                   <HoverCardContent className="w-80">
                     <div className="flex justify-between space-x-4">
                       <div className="space-y-1">
                         <h4 className="text-sm font-semibold">@nextjs</h4>
                         <p className="text-sm">
-                          The React Framework – created and maintained by
-                          @vercel.
+                          
                         </p>
                         <div className="flex items-center pt-2">
                           <span className="text-xs text-muted-foreground">
@@ -427,6 +430,7 @@ function Detail() {
                 <div>{moment(data?.createdAt).format("ll")}</div>
               </div>
             </div>
+           
           </div>
 
           <div className=" mt-6 flex items-center py-3 justify-between border-b border-gray-100 border-t">
@@ -474,17 +478,17 @@ function Detail() {
             </div>
           </div>
 
-          <div className=" mt-8 flex flex-col gap-5">
+            <div className=" mt-8 flex flex-col gap-5">
             <img
               src={data?.cover_image}
-              className=" w-full h-[400px] h-sm-[100px] h-md-[100px]  object-cover rounded-md "
+              className=" w-full h-[250px] lg:h-[400px] object-cover rounded-md "
               alt=""
             />
             <div
               className="descriptionText tracking-wider"
               dangerouslySetInnerHTML={{ __html: data?.description }}
             ></div>
-          </div>
+            </div>
           <div className=" w-full h-[1px] bg-gray-200 my-8"></div>
           <div>
             <div className="text-xl font-[450]">Tags</div>
